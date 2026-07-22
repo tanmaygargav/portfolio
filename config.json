@@ -12,11 +12,12 @@
   },
 
   "social": {
-    "github": "",
-    "linkedin": "",
-    "strava": "",
-    "instagram": "",
-    "twitter": ""
+    "github":    "https://github.com/tanmaygargav",
+    "linkedin":  "https://www.linkedin.com/in/tanmay-gargav/",
+    "strava":    "https://www.strava.com/athletes/195054289",
+    "instagram": "https://www.instagram.com/tanmay.gargav",
+    "twitter":   "",
+    "zoho":      "tanmay.gargav@zohomail.com"
   },
 
   "sections": [
@@ -28,6 +29,7 @@
   ],
 
   "fitness": {
+    "stravaProfileUrl": "https://www.strava.com/athletes/195054289",
     "defaultTab": "all",
     "tabs": [
       { "id": "all",      "label": "All",      "icon": "⚡" },

@@ -767,11 +767,12 @@ async function applyConfig(cfg) {
   // Social links
   const social = cfg.social || {};
   const links = [
-    { key:"github",    label:"GitHub",    icon:"⌥" },
-    { key:"linkedin",  label:"LinkedIn",  icon:"in" },
-    { key:"strava",    label:"Strava",    icon:"S" },
-    { key:"instagram", label:"Instagram", icon:"📷" },
-    { key:"twitter",   label:"Twitter",   icon:"𝕏" },
+    { key:"github",    label:"GitHub",    icon:"⌥",  href: v => v },
+    { key:"linkedin",  label:"LinkedIn",  icon:"in", href: v => v },
+    { key:"strava",    label:"Strava",    icon:"S",  href: v => v },
+    { key:"instagram", label:"Instagram", icon:"📷", href: v => v },
+    { key:"twitter",   label:"X / Twitter", icon:"𝕏", href: v => v, placeholder: true },
+    { key:"zoho",      label:"Zoho Mail", icon:"Z",  href: v => `mailto:${v}` },
   ];
   const emailLink = cfg.site?.email
     ? `<a class="social-link" href="mailto:${cfg.site.email}">✉ ${cfg.site.email}</a>` : "";
@@ -779,10 +780,18 @@ async function applyConfig(cfg) {
   document.getElementById("social-links").innerHTML =
     emailLink +
     links
-      .filter(l => social[l.key])
-      .map(l => `<a class="social-link" href="${social[l.key]}" target="_blank" rel="noopener">
-        <span>${l.icon}</span> ${l.label}
-      </a>`).join("");
+      .filter(l => social[l.key] || l.placeholder)
+      .map(l => {
+        const val = social[l.key];
+        if (!val && l.placeholder) {
+          return `<span class="social-link" style="opacity:0.3;cursor:default;" title="Coming soon">
+            <span>${l.icon}</span> ${l.label}
+          </span>`;
+        }
+        return `<a class="social-link" href="${l.href(val)}" target="_blank" rel="noopener">
+          <span>${l.icon}</span> ${l.label}
+        </a>`;
+      }).join("");
 
   // Footer
   document.getElementById("footer-credit").textContent =
