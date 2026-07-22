@@ -839,6 +839,7 @@ async function applyConfig(cfg) {
     sections.map(s => `<li><a href="#${s.id}">${s.label}</a></li>`).join("");
 
   // Hero
+  const name = cfg.site?.name || "Tanmay Gargav";
   document.getElementById("hero-name").textContent = name.split(" ")[0];
 
   // Social links — brand SVG icons
