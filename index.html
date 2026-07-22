@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* ── TOKENS ───────────────────────────────────────────────── */
+    :root {
+      --bg:        #0a0a0a;
+      --bg2:       #111111;
+      --bg3:       #1a1a1a;
+      --border:    #222222;
+      --text:      #e8e8e8;
+      --muted:     #666666;
+      --accent:    #00d4ff;
+      --accent2:   #00ff87;
+      --radius:    12px;
+      --gap:       2rem;
+      --transition: 0.25s ease;
+    }
+
+    /* ── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 6rem 0; border-top: 1px solid var(--border); }
+
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.1rem; font-weight: 600; }
+    p  { color: var(--muted); }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition);
+    }
+    .card:hover { border-color: #333; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); text-decoration: none; }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      border-top: none;
+      padding: 0;
+    }
+    .hero-inner {
+      padding: 8rem 1.5rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .hero-badge::before { content: "●"; font-size: 0.5rem; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+    .hero-title { margin-bottom: 1.5rem; }
+    .hero-title .accent { color: var(--accent); }
+    .hero-tagline {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover { background: #00bbdd; text-decoration: none; color: #000; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: #444; background: var(--bg2); text-decoration: none; }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+    .hero-stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── SKILLS ───────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .skill-category-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .skill-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .skill-name {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .skill-icon { font-size: 1rem; }
+    .skill-level {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+    .level-daily      { background: rgba(0,212,255,0.12); color: #00d4ff; }
+    .level-proficient { background: rgba(0,255,135,0.12); color: #00ff87; }
+    .level-familiar   { background: rgba(136,136,136,0.12); color: #888; }
+
+    .skills-legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ── FITNESS ──────────────────────────────────────────────── */
+    .fitness-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+    .tab-btn:hover { color: var(--text); border-color: #333; }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .fitness-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 700px) { .fitness-grid { grid-template-columns: 1fr; } }
+
+    .chart-wrap { position: relative; height: 220px; }
+
+    .pb-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .pb-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .pb-distance { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .pb-time { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin: 0.25rem 0; }
+    .pb-date { font-size: 0.72rem; color: var(--muted); }
+
+    .activity-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      transition: border-color var(--transition);
+    }
+    .activity-item:hover { border-color: #333; }
+    .activity-name { font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+    .activity-meta { display: flex; gap: 1.2rem; color: var(--muted); font-size: 0.8rem; }
+    .activity-date { color: var(--muted); font-size: 0.78rem; }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+    }
+    .empty-state a { color: var(--accent); }
+
+    /* ── PHOTOGRAPHY ──────────────────────────────────────────── */
+    .photo-grid {
+      columns: 3 280px;
+      column-gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .photo-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+    }
+    .photo-item img {
+      width: 100%;
+      transition: transform 0.4s ease;
+    }
+    .photo-item:hover img { transform: scale(1.03); }
+    .photo-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      padding: 1.5rem 1rem 1rem;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .photo-item:hover .photo-overlay { opacity: 1; }
+    .photo-title { font-size: 0.9rem; font-weight: 600; color: #fff; }
+    .photo-loc   { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+    .photo-placeholder {
+      background: var(--bg2);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+      break-inside: avoid;
+      margin-bottom: 1rem;
+    }
+
+    /* ── LIGHTBOX ─────────────────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 85vh; border-radius: var(--radius); object-fit: contain; }
+    #lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── CONTACT ──────────────────────────────────────────────── */
+    .contact-inner {
+      max-width: 560px;
+    }
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all var(--transition);
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+    .sync-info { font-size: 0.72rem; color: #444; margin-top: 0.25rem; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .pb-grid { grid-template-columns: repeat(2, 1fr); }
+      .fitness-grid { grid-template-columns: 1fr; }
+      .photo-grid { columns: 2 150px; }
+    }
+
+    /* ── SCROLL FADE IN ───────────────────────────────────────── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" id="nav-name">T<span>.</span></div>
+    <ul class="nav-links" id="nav-links"></ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge" id="hero-badge">Available for interesting problems</div>
+    <h1 class="hero-title">
+      Hi, I'm <span class="accent" id="hero-name">Tanmay</span>
+    </h1>
+    <p class="hero-tagline" id="hero-tagline">Loading…</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="#skills" class="btn btn-ghost">View my work</a>
+    </div>
+    <div class="hero-stats" id="hero-stats"></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container fade-in">
+    <div class="section-label">What I work with</div>
+    <h2>Technical Skills</h2>
+    <p id="skills-sub">Languages, frameworks, and tools I use to build things.</p>
+    <div class="skills-grid" id="skills-grid"></div>
+    <div class="skills-legend" id="skills-legend"></div>
+  </div>
+</section>
+
+<!-- FITNESS -->
+<section id="fitness">
+  <div class="container fade-in">
+    <div class="section-label">Life outside the screen</div>
+    <h2>Fitness</h2>
+    <p>Every mile logged, every elevation gained.</p>
+
+    <div class="fitness-tabs" id="fitness-tabs"></div>
+
+    <!-- ALL -->
+    <div class="tab-panel active" id="panel-all">
+      <div class="stats-row" id="all-stats-row"></div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Recent Activities</h3>
+        <div class="activity-list" id="all-recent"></div>
+      </div>
+    </div>
+
+    <!-- RUNNING -->
+    <div class="tab-panel" id="panel-running">
+      <div class="stats-row" id="run-stats-row"></div>
+      <div class="fitness-grid">
+        <div class="card">
+          <h3>Monthly Distance (km)</h3>
+          <div class="chart-wrap"><canvas id="chart-run-monthly"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Personal Bests</h3>
+          <div class="pb-grid" id="run-pbs"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1rem;">
+        <h3>Recent Runs</h3>
+        <div class="activity-list" id="run-recent"></div>
+      </div>
+    </div>
+
+    <!-- CYCLING -->
+    <div class="tab-panel" id="panel-cycling">
+      <div class="stats-row" id="cyc-stats-row"></div>
+      <div class="fitness-grid">
+        <div class="card">
+          <h3>Monthly Distance (km)</h3>
+          <div class="chart-wrap"><canvas id="chart-cyc-monthly"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Recent Rides</h3>
+          <div class="activity-list" id="cyc-recent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWIMMING -->
+    <div class="tab-panel" id="panel-swimming">
+      <div class="stats-row" id="swm-stats-row"></div>
+      <div class="fitness-grid">
+        <div class="card">
+          <h3>Monthly Distance (km)</h3>
+          <div class="chart-wrap"><canvas id="chart-swm-monthly"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Recent Sessions</h3>
+          <div class="activity-list" id="swm-recent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIKING -->
+    <div class="tab-panel" id="panel-hiking">
+      <div class="stats-row" id="hik-stats-row"></div>
+      <div class="fitness-grid">
+        <div class="card">
+          <h3>Monthly Distance (km)</h3>
+          <div class="chart-wrap"><canvas id="chart-hik-monthly"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Recent Hikes</h3>
+          <div class="activity-list" id="hik-recent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY -->
+<section id="photography">
+  <div class="container fade-in">
+    <div class="section-label">Through the lens</div>
+    <h2>Photography</h2>
+    <p id="photo-desc">Moments captured between miles.</p>
+    <div class="photo-grid" id="photo-grid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container fade-in">
+    <div class="section-label">Let's connect</div>
+    <div class="contact-inner">
+      <h2>Get in touch</h2>
+      <p style="margin-top:0.75rem;" id="contact-email-text">Drop me an email or find me on any of these platforms.</p>
+      <div class="social-links" id="social-links"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p id="footer-credit">Built with care. Powered by Strava & Google Sheets.</p>
+    <p class="sync-info" id="sync-info"></p>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   PORTFOLIO — DATA-DRIVEN RENDERER
+   Reads: config.json, data/strava.json, data/skills.json,
+          data/content.json, data/photos.json
+═══════════════════════════════════════════════════════════════ */
+
+const CHART_DEFAULTS = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { grid: { color: "#1e1e1e" }, ticks: { color: "#666", font: { size: 11 } } },
+    y: { grid: { color: "#1e1e1e" }, ticks: { color: "#666", font: { size: 11 } }, beginAtZero: true },
+  },
+};
+
+// ─── FETCH HELPERS ──────────────────────────────────────────────
+async function loadJSON(path) {
+  try {
+    const r = await fetch(path + "?t=" + Date.now());
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+// ─── CHART HELPER ───────────────────────────────────────────────
+function makeBarChart(canvasId, monthlyKm, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (!monthlyKm || !monthlyKm.length) {
+    canvas.closest('.chart-wrap').innerHTML =
+      `<div class="empty-state" style="height:100%;display:flex;align-items:center;justify-content:center;">
+        <span>No data yet — sync your Strava</span>
+      </div>`;
+    return;
+  }
+  new Chart(canvas, {
+    type: "bar",
+    data: {
+      labels: monthlyKm.map(d => d.month.slice(5)), // MM
+      datasets: [{
+        data: monthlyKm.map(d => d.km),
+        backgroundColor: color + "33",
+        borderColor: color,
+        borderWidth: 2,
+        borderRadius: 4,
+      }],
+    },
+    options: { ...CHART_DEFAULTS },
+  });
+}
+
+// ─── STATS ROW ──────────────────────────────────────────────────
+function renderStatsRow(containerId, stats) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>
+  `).join("");
+}
+
+// ─── ACTIVITY LIST ──────────────────────────────────────────────
+const TYPE_ICONS = { running:"🏃", cycling:"🚴", swimming:"🏊", hiking:"🥾" };
+
+function renderActivityList(containerId, activities) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!activities || !activities.length) {
+    el.innerHTML = `<div class="empty-state">No activities yet. <a href="#" onclick="return false">Connect Strava to get started.</a></div>`;
+    return;
+  }
+  el.innerHTML = activities.map(a => `
+    <a class="activity-item" href="${a.stravaUrl || '#'}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+      <div>
+        <div class="activity-name">
+          <span>${TYPE_ICONS[a.type] || "⚡"}</span>
+          ${a.name}
+        </div>
+        <div class="activity-date">${a.date}</div>
+      </div>
+      <div class="activity-meta">
+        <span>${a.distanceKm} km</span>
+        <span>${a.durationFmt}</span>
+        ${a.avgPace ? `<span>${a.avgPace}/km</span>` : ""}
+        ${a.elevationM > 0 ? `<span>↑${a.elevationM}m</span>` : ""}
+      </div>
+    </a>
+  `).join("");
+}
+
+// ─── LOAD CONFIG ────────────────────────────────────────────────
+async function applyConfig(cfg) {
+  if (!cfg) return;
+  document.title = cfg.site?.name || "Portfolio";
+
+  // CSS accent color
+  if (cfg.site?.accentColor) {
+    document.documentElement.style.setProperty("--accent", cfg.site.accentColor);
+  }
+  if (cfg.site?.accentColorSecondary) {
+    document.documentElement.style.setProperty("--accent2", cfg.site.accentColorSecondary);
+  }
+
+  // Nav logo
+  const name = cfg.site?.name || "Portfolio";
+  document.getElementById("nav-name").innerHTML =
+    name.split(" ")[0] + `<span style="color:var(--accent)">.</span>`;
+
+  // Nav links
+  const sections = (cfg.sections || []).filter(s => s.enabled);
+  document.getElementById("nav-links").innerHTML =
+    sections.map(s => `<li><a href="#${s.id}">${s.label}</a></li>`).join("");
+
+  // Hero
+  document.getElementById("hero-name").textContent = name.split(" ")[0];
+
+  // Social links
+  const social = cfg.social || {};
+  const links = [
+    { key:"github",    label:"GitHub",    icon:"⌥" },
+    { key:"linkedin",  label:"LinkedIn",  icon:"in" },
+    { key:"strava",    label:"Strava",    icon:"S" },
+    { key:"instagram", label:"Instagram", icon:"📷" },
+    { key:"twitter",   label:"Twitter",   icon:"𝕏" },
+  ];
+  const emailLink = cfg.site?.email
+    ? `<a class="social-link" href="mailto:${cfg.site.email}">✉ ${cfg.site.email}</a>` : "";
+
+  document.getElementById("social-links").innerHTML =
+    emailLink +
+    links
+      .filter(l => social[l.key])
+      .map(l => `<a class="social-link" href="${social[l.key]}" target="_blank" rel="noopener">
+        <span>${l.icon}</span> ${l.label}
+      </a>`).join("");
+
+  // Footer
+  document.getElementById("footer-credit").textContent =
+    `${name} · Built with care. Powered by Strava & Google Sheets.`;
+}
+
+// ─── LOAD CONTENT ───────────────────────────────────────────────
+async function applyContent(content) {
+  if (!content) return;
+  const about = content.about || {};
+  document.getElementById("hero-tagline").textContent =
+    about.bio || "Software engineer & endurance athlete.";
+  if (content.photography?.description) {
+    document.getElementById("photo-desc").textContent = content.photography.description;
+  }
+}
+
+// ─── LOAD SKILLS ────────────────────────────────────────────────
+async function applySkills(skills) {
+  const grid = document.getElementById("skills-grid");
+  const legend = document.getElementById("skills-legend");
+  if (!skills || !grid) return;
+
+  grid.innerHTML = (skills.categories || []).map(cat => `
+    <div class="card">
+      <div class="skill-category-title">${cat.name}</div>
+      <div class="skill-list">
+        ${(cat.skills || []).map(s => `
+          <div class="skill-item">
+            <div class="skill-name">
+              <span class="skill-icon">${s.icon || "🔧"}</span>
+              ${s.name}
+            </div>
+            <span class="skill-level level-${s.level}">${
+              s.level === "daily" ? "Daily" :
+              s.level === "proficient" ? "Proficient" : "Familiar"
+            }</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  const levels = skills.levels || {
+    daily:      { label: "Daily Use",  color: "#00d4ff" },
+    proficient: { label: "Proficient", color: "#00ff87" },
+    familiar:   { label: "Familiar",   color: "#888888" },
+  };
+  legend.innerHTML = Object.entries(levels).map(([, v]) => `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${v.color}"></div>
+      ${v.label}
+    </div>
+  `).join("");
+}
+
+// ─── LOAD STRAVA ────────────────────────────────────────────────
+async function applyStrava(strava, cfg) {
+  if (!strava) return;
+
+  const sum = strava.summary || {};
+  const bt  = strava.byType || {};
+
+  // Hero stats
+  document.getElementById("hero-stats").innerHTML = `
+    <div>
+      <div class="hero-stat-value">${sum.totalDistanceKm?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">km</small></div>
+      <div class="hero-stat-label">Total distance</div>
+    </div>
+    <div>
+      <div class="hero-stat-value">${sum.totalActivities?.toLocaleString() || "—"}</div>
+      <div class="hero-stat-label">Activities</div>
+    </div>
+    <div>
+      <div class="hero-stat-value">${sum.totalHours?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">hrs</small></div>
+      <div class="hero-stat-label">Hours trained</div>
+    </div>
+    <div>
+      <div class="hero-stat-value">${sum.totalElevationM?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">m</small></div>
+      <div class="hero-stat-label">Elevation gained</div>
+    </div>
+  `;
+
+  // Fitness tabs from config
+  const tabs = cfg?.fitness?.tabs || [
+    { id:"all", label:"All", icon:"⚡" },
+    { id:"running", label:"Running", icon:"🏃" },
+    { id:"cycling", label:"Cycling", icon:"🚴" },
+    { id:"swimming", label:"Swimming", icon:"🏊" },
+    { id:"hiking", label:"Hiking", icon:"🥾" },
+  ];
+  const defaultTab = cfg?.fitness?.defaultTab || "all";
+
+  const tabsEl = document.getElementById("fitness-tabs");
+  tabsEl.innerHTML = tabs.map(t => `
+    <button class="tab-btn ${t.id === defaultTab ? "active" : ""}"
+            data-tab="${t.id}">
+      ${t.icon} ${t.label}
+    </button>
+  `).join("");
+
+  tabsEl.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("panel-" + btn.dataset.tab)?.classList.add("active");
+    });
+  });
+
+  // ── ALL tab ─────────────────────────────────────────────────
+  renderStatsRow("all-stats-row", [
+    { value: sum.totalActivities || 0, label: "Activities" },
+    { value: (sum.totalDistanceKm || 0) + " km", label: "Total Distance" },
+    { value: (sum.totalHours || 0) + " hrs", label: "Hours" },
+    { value: (sum.totalElevationM || 0) + " m", label: "Elevation" },
+  ]);
+  renderActivityList("all-recent", strava.recentAll || []);
+
+  // ── RUNNING ─────────────────────────────────────────────────
+  const run = bt.running || {};
+  const rs  = run.stats || {};
+  renderStatsRow("run-stats-row", [
+    { value: rs.totalRuns || 0, label: "Runs" },
+    { value: (rs.totalDistanceKm || 0) + " km", label: "Total Distance" },
+    { value: (rs.totalHours || 0) + " hrs", label: "Time Running" },
+    { value: run.races?.length || 0, label: "Races" },
+  ]);
+  makeBarChart("chart-run-monthly", run.monthlyKm, "#00d4ff");
+
+  const pbs = rs.personalBests || {};
+  document.getElementById("run-pbs").innerHTML = [
+    { dist: "5K",            key: "5k"   },
+    { dist: "10K",           key: "10k"  },
+    { dist: "Half Marathon", key: "half" },
+    { dist: "Marathon",      key: "full" },
+  ].map(p => {
+    const pb = pbs[p.key] || { time: "--:--", date: "" };
+    return `
+      <div class="pb-card">
+        <div class="pb-distance">${p.dist}</div>
+        <div class="pb-time">${pb.time}</div>
+        <div class="pb-date">${pb.date || "—"}</div>
+      </div>
+    `;
+  }).join("");
+  renderActivityList("run-recent", run.recentActivities || []);
+
+  // ── CYCLING ─────────────────────────────────────────────────
+  const cyc = bt.cycling || {};
+  const cs  = cyc.stats || {};
+  renderStatsRow("cyc-stats-row", [
+    { value: cs.totalRides || 0,        label: "Rides" },
+    { value: (cs.totalDistanceKm || 0) + " km", label: "Total Distance" },
+    { value: (cs.totalElevationM || 0) + " m",  label: "Elevation" },
+    { value: (cs.longestRidesKm || 0) + " km",  label: "Longest Ride" },
+  ]);
+  makeBarChart("chart-cyc-monthly", cyc.monthlyKm, "#00ff87");
+  renderActivityList("cyc-recent", cyc.recentActivities || []);
+
+  // ── SWIMMING ────────────────────────────────────────────────
+  const swm = bt.swimming || {};
+  const ss  = swm.stats || {};
+  renderStatsRow("swm-stats-row", [
+    { value: ss.totalSessions || 0,     label: "Sessions" },
+    { value: (ss.totalDistanceKm || 0) + " km", label: "Total Distance" },
+    { value: ss.poolSessions || 0,      label: "Pool" },
+    { value: ss.openWaterSessions || 0, label: "Open Water" },
+  ]);
+  makeBarChart("chart-swm-monthly", swm.monthlyKm, "#7c3aed");
+  renderActivityList("swm-recent", swm.recentActivities || []);
+
+  // ── HIKING ──────────────────────────────────────────────────
+  const hik = bt.hiking || {};
+  const hs  = hik.stats || {};
+  renderStatsRow("hik-stats-row", [
+    { value: hs.totalHikes || 0,         label: "Hikes" },
+    { value: (hs.totalDistanceKm || 0) + " km",  label: "Total Distance" },
+    { value: (hs.totalElevationM || 0) + " m",   label: "Elevation" },
+    { value: (hs.longestHikesKm || 0) + " km",   label: "Longest Hike" },
+  ]);
+  makeBarChart("chart-hik-monthly", hik.monthlyKm, "#f59e0b");
+  renderActivityList("hik-recent", hik.recentActivities || []);
+
+  // Sync info
+  if (strava.lastUpdated) {
+    const d = new Date(strava.lastUpdated);
+    document.getElementById("sync-info").textContent =
+      "Last synced: " + d.toLocaleString();
+  }
+}
+
+// ─── LOAD PHOTOS ────────────────────────────────────────────────
+async function applyPhotos(photosData) {
+  const grid = document.getElementById("photo-grid");
+  if (!grid) return;
+  const photos = photosData?.photos || [];
+
+  if (!photos.length) {
+    // Show placeholder tiles
+    grid.innerHTML = Array(6).fill(0).map(() => `
+      <div class="photo-placeholder">
+        <span style="font-size:2rem">📷</span>
+        <span>Add photos via Google Sheets</span>
+      </div>
+    `).join("");
+    return;
+  }
+
+  grid.innerHTML = photos.map(p => `
+    <div class="photo-item" data-src="${p.file}" data-title="${p.title || ""}">
+      <img src="${p.file}" alt="${p.title || ""}" loading="lazy"
+           onerror="this.parentElement.style.display='none'" />
+      <div class="photo-overlay">
+        <div class="photo-title">${p.title || ""}</div>
+        <div class="photo-loc">${p.location || ""}</div>
+      </div>
+    </div>
+  `).join("");
+
+  // Lightbox
+  grid.querySelectorAll(".photo-item").forEach(item => {
+    item.addEventListener("click", () => {
+      document.getElementById("lightbox-img").src = item.dataset.src;
+      document.getElementById("lightbox").classList.add("open");
+    });
+  });
+}
+
+// ─── SCROLL SPY ─────────────────────────────────────────────────
+function initScrollSpy() {
+  const sections = document.querySelectorAll("section[id]");
+  const links    = document.querySelectorAll(".nav-links a");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => {
+          l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  sections.forEach(s => observer.observe(s));
+}
+
+// ─── FADE IN ON SCROLL ───────────────────────────────────────────
+function initFadeIn() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+}
+
+// ─── LIGHTBOX CLOSE ─────────────────────────────────────────────
+document.getElementById("lightbox-close").addEventListener("click", () => {
+  document.getElementById("lightbox").classList.remove("open");
+});
+document.getElementById("lightbox").addEventListener("click", e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove("open");
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") document.getElementById("lightbox").classList.remove("open");
+});
+
+// ─── BOOT ───────────────────────────────────────────────────────
+async function boot() {
+  const [cfg, strava, skills, content, photos] = await Promise.all([
+    loadJSON("config.json"),
+    loadJSON("data/strava.json"),
+    loadJSON("data/skills.json"),
+    loadJSON("data/content.json"),
+    loadJSON("data/photos.json"),
+  ]);
+
+  await applyConfig(cfg);
+  await applyContent(content);
+  await applySkills(skills);
+  await applyStrava(strava, cfg);
+  await applyPhotos(photos);
+
+  initScrollSpy();
+  initFadeIn();
+}
+
+boot();
+</script>
+</body>
+</html>

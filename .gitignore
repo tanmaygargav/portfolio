@@ -1,0 +1,24 @@
+# Environment & secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Logs
+*.log
+sync.log
+
+# Admin panel (local only, not for public deployment)
+admin.html
+
+# Token cache
+.strava_token_cache.json

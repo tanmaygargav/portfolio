@@ -1,0 +1,50 @@
+{
+  "site": {
+    "name": "Tanmay Gargav",
+    "title": "Software Engineer & Endurance Athlete",
+    "tagline": "I build software and run marathons. Both require the same thing — consistency.",
+    "location": "India",
+    "email": "tanmay.gargav@47billion.com",
+    "avatar": "photos/avatar.jpg",
+    "theme": "dark",
+    "accentColor": "#00d4ff",
+    "accentColorSecondary": "#00ff87"
+  },
+
+  "social": {
+    "github": "",
+    "linkedin": "",
+    "strava": "",
+    "instagram": "",
+    "twitter": ""
+  },
+
+  "sections": [
+    { "id": "hero",        "label": "Home",        "enabled": true },
+    { "id": "skills",      "label": "Skills",       "enabled": true },
+    { "id": "fitness",     "label": "Fitness",      "enabled": true },
+    { "id": "photography", "label": "Photography",  "enabled": true },
+    { "id": "contact",     "label": "Contact",      "enabled": true }
+  ],
+
+  "fitness": {
+    "defaultTab": "all",
+    "tabs": [
+      { "id": "all",      "label": "All",      "icon": "⚡" },
+      { "id": "running",  "label": "Running",  "icon": "🏃" },
+      { "id": "cycling",  "label": "Cycling",  "icon": "🚴" },
+      { "id": "swimming", "label": "Swimming", "icon": "🏊" },
+      { "id": "hiking",   "label": "Hiking",   "icon": "🥾" }
+    ]
+  },
+
+  "photography": {
+    "description": "Moments captured between miles.",
+    "layout": "masonry"
+  },
+
+  "sync": {
+    "googleSheetsId": "",
+    "lastSynced": ""
+  }
+}

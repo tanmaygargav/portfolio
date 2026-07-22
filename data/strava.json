@@ -1,0 +1,58 @@
+{
+  "lastUpdated": "",
+  "summary": {
+    "totalActivities": 0,
+    "totalDistanceKm": 0,
+    "totalElevationM": 0,
+    "totalHours": 0
+  },
+  "byType": {
+    "running": {
+      "stats": {
+        "totalRuns": 0,
+        "totalDistanceKm": 0,
+        "totalHours": 0,
+        "personalBests": {
+          "5k":   { "time": "--:--", "date": "" },
+          "10k":  { "time": "--:--", "date": "" },
+          "half": { "time": "--:--", "date": "" },
+          "full": { "time": "--:--", "date": "" }
+        }
+      },
+      "races": [],
+      "recentActivities": [],
+      "monthlyKm": []
+    },
+    "cycling": {
+      "stats": {
+        "totalRides": 0,
+        "totalDistanceKm": 0,
+        "totalElevationM": 0,
+        "longestRideKm": 0
+      },
+      "recentActivities": [],
+      "monthlyKm": []
+    },
+    "swimming": {
+      "stats": {
+        "totalSessions": 0,
+        "totalDistanceKm": 0,
+        "poolSessions": 0,
+        "openWaterSessions": 0
+      },
+      "recentActivities": [],
+      "monthlyKm": []
+    },
+    "hiking": {
+      "stats": {
+        "totalHikes": 0,
+        "totalDistanceKm": 0,
+        "totalElevationM": 0,
+        "longestHikeKm": 0
+      },
+      "recentActivities": [],
+      "monthlyKm": []
+    }
+  },
+  "recentAll": []
+}
