@@ -500,7 +500,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-inner">
-    <div class="hero-badge" id="hero-badge">Available for interesting problems</div>
+    <div class="hero-badge" id="hero-badge">Architecting systems. Logging miles. Repeat.</div>
     <h1 class="hero-title">
       Hi, I'm <span class="accent" id="hero-name">Tanmay</span>
     </h1>
@@ -846,19 +846,19 @@ async function applyStrava(strava, cfg) {
   const sum = strava.summary || {};
   const bt  = strava.byType || {};
 
-  // Hero stats
+  // Hero stats — technical first, fitness second
   document.getElementById("hero-stats").innerHTML = `
     <div>
-      <div class="hero-stat-value">${sum.totalDistanceKm?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">km</small></div>
-      <div class="hero-stat-label">Total distance</div>
+      <div class="hero-stat-value">8+ <small style="font-size:1rem;font-weight:400;color:var(--muted)">yrs</small></div>
+      <div class="hero-stat-label">Experience</div>
     </div>
     <div>
       <div class="hero-stat-value">${sum.totalActivities?.toLocaleString() || "—"}</div>
-      <div class="hero-stat-label">Activities</div>
+      <div class="hero-stat-label">Activities logged</div>
     </div>
     <div>
-      <div class="hero-stat-value">${sum.totalHours?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">hrs</small></div>
-      <div class="hero-stat-label">Hours trained</div>
+      <div class="hero-stat-value">${sum.totalDistanceKm?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">km</small></div>
+      <div class="hero-stat-label">Distance covered</div>
     </div>
     <div>
       <div class="hero-stat-value">${sum.totalElevationM?.toLocaleString() || "—"} <small style="font-size:1rem;font-weight:400;color:var(--muted)">m</small></div>
