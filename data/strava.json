@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-07-22T18:08:00.571666+00:00",
+  "lastUpdated": "2026-07-22T19:25:26.641906+00:00",
   "summary": {
-    "totalActivities": 94,
-    "totalDistanceKm": 1710.9,
+    "totalActivities": 125,
+    "totalDistanceKm": 626.5,
     "totalElevationM": 4136.5,
-    "totalHours": 73.2
+    "totalHours": 109.8
   },
   "byType": {
     "running": {
@@ -344,11 +344,11 @@
     "swimming": {
       "stats": {
         "totalSessions": 4,
-        "totalDistanceKm": 650.0,
+        "totalDistanceKm": 0.7,
         "totalElevationM": 0.0,
-        "longestSessionsKm": 250.0,
-        "poolSessions": 0,
-        "openWaterSessions": 4
+        "longestSessionsKm": 0.2,
+        "poolSessions": 4,
+        "openWaterSessions": 0
       },
       "recentActivities": [
         {
@@ -356,7 +356,7 @@
           "name": "Evening Swim",
           "type": "swimming",
           "date": "2026-03-17",
-          "distanceKm": 150.0,
+          "distanceKm": 0.15,
           "durationFmt": "1:00:00",
           "elevationM": 0.0,
           "avgSpeedKph": 0.2,
@@ -368,7 +368,7 @@
           "name": "Evening Swim",
           "type": "swimming",
           "date": "2026-03-16",
-          "distanceKm": 250.0,
+          "distanceKm": 0.25,
           "durationFmt": "1:10:00",
           "elevationM": 0.0,
           "avgSpeedKph": 0.2,
@@ -380,7 +380,7 @@
           "name": "Evening Swim",
           "type": "swimming",
           "date": "2026-03-15",
-          "distanceKm": 150.0,
+          "distanceKm": 0.15,
           "durationFmt": "1:20:00",
           "elevationM": 0.0,
           "avgSpeedKph": 0.1,
@@ -392,7 +392,7 @@
           "name": "Evening Swim",
           "type": "swimming",
           "date": "2026-03-14",
-          "distanceKm": 100.0,
+          "distanceKm": 0.1,
           "durationFmt": "1:40:00",
           "elevationM": 0.0,
           "avgSpeedKph": 0.1,
@@ -403,22 +403,62 @@
       "monthlyKm": [
         {
           "month": "2026-03",
-          "km": 650.0
+          "km": 0.7
         }
       ]
     },
     "hiking": {
       "stats": {
-        "totalHikes": 43,
-        "totalDistanceKm": 581.9,
-        "totalElevationM": 1955.5,
-        "longestHikesKm": 435.5
+        "totalHikes": 2,
+        "totalDistanceKm": 6.9,
+        "totalElevationM": 1239.3,
+        "longestHikesKm": 4.4
+      },
+      "recentActivities": [
+        {
+          "id": "18370111417",
+          "name": "Deoria Tal Trek",
+          "type": "hiking",
+          "date": "2026-05-04",
+          "distanceKm": 2.5,
+          "durationFmt": "1:01:13",
+          "elevationM": 425.3,
+          "avgSpeedKph": 2.5,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/18370111417"
+        },
+        {
+          "id": "18353113177",
+          "name": "Chandrashila - Tungnath Trek",
+          "type": "hiking",
+          "date": "2026-05-02",
+          "distanceKm": 4.4,
+          "durationFmt": "2:00:55",
+          "elevationM": 814.0,
+          "avgSpeedKph": 2.2,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/18353113177"
+        }
+      ],
+      "monthlyKm": [
+        {
+          "month": "2026-05",
+          "km": 6.9
+        }
+      ]
+    },
+    "walking": {
+      "stats": {
+        "totalWalks": 41,
+        "totalDistanceKm": 140.0,
+        "totalElevationM": 716.2,
+        "longestWalksKm": 15.7
       },
       "recentActivities": [
         {
           "id": "19339161828",
           "name": "Evening Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-07-16",
           "distanceKm": 10.2,
           "durationFmt": "1:55:28",
@@ -430,7 +470,7 @@
         {
           "id": "19311789877",
           "name": "Night Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-07-14",
           "distanceKm": 3.24,
           "durationFmt": "37:29",
@@ -442,7 +482,7 @@
         {
           "id": "19256077025",
           "name": "Evening Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-07-10",
           "distanceKm": 1.87,
           "durationFmt": "20:52",
@@ -454,7 +494,7 @@
         {
           "id": "19052049757",
           "name": "Walk-in-Rain",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-06-24",
           "distanceKm": 5.03,
           "durationFmt": "1:03:07",
@@ -466,9 +506,9 @@
         {
           "id": "18736671893",
           "name": "Morning Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-06-01",
-          "distanceKm": 435.5,
+          "distanceKm": 0.44,
           "durationFmt": "9:02",
           "elevationM": 0.0,
           "avgSpeedKph": 2.9,
@@ -478,7 +518,7 @@
         {
           "id": "18731818858",
           "name": "Night Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-05-31",
           "distanceKm": 2.75,
           "durationFmt": "40:08",
@@ -490,7 +530,7 @@
         {
           "id": "18704540313",
           "name": "Night Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-05-29",
           "distanceKm": 1.38,
           "durationFmt": "29:40",
@@ -502,7 +542,7 @@
         {
           "id": "18677401051",
           "name": "Night Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-05-27",
           "distanceKm": 1.28,
           "durationFmt": "20:12",
@@ -514,7 +554,7 @@
         {
           "id": "18635197066",
           "name": "Evening Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-05-24",
           "distanceKm": 3.58,
           "durationFmt": "41:44",
@@ -526,7 +566,7 @@
         {
           "id": "18630939189",
           "name": "Afternoon Walk",
-          "type": "hiking",
+          "type": "walking",
           "date": "2026-05-23",
           "distanceKm": 2.37,
           "durationFmt": "25:16",
@@ -559,20 +599,172 @@
         },
         {
           "month": "2026-05",
-          "km": 20.1
+          "km": 13.2
         },
         {
           "month": "2026-06",
-          "km": 440.5
+          "km": 5.5
         },
         {
           "month": "2026-07",
           "km": 15.3
         }
       ]
+    },
+    "workout": {
+      "stats": {
+        "totalWorkouts": 31,
+        "totalHours": 36.6
+      },
+      "recentActivities": [
+        {
+          "id": "19412075304",
+          "name": "Workout D31",
+          "type": "workout",
+          "date": "2026-07-22",
+          "distanceKm": 0.0,
+          "durationFmt": "1:21:30",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19412075304"
+        },
+        {
+          "id": "19397289843",
+          "name": "Workout D30",
+          "type": "workout",
+          "date": "2026-07-21",
+          "distanceKm": 0.0,
+          "durationFmt": "1:18:37",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19397289843"
+        },
+        {
+          "id": "19383708063",
+          "name": "Workout D29",
+          "type": "workout",
+          "date": "2026-07-20",
+          "distanceKm": 0.0,
+          "durationFmt": "1:29:16",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19383708063"
+        },
+        {
+          "id": "19331212317",
+          "name": "Workout D28",
+          "type": "workout",
+          "date": "2026-07-16",
+          "distanceKm": 0.0,
+          "durationFmt": "1:01:00",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19331212317"
+        },
+        {
+          "id": "19317662698",
+          "name": "Workout D27",
+          "type": "workout",
+          "date": "2026-07-15",
+          "distanceKm": 0.0,
+          "durationFmt": "1:16:14",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19317662698"
+        },
+        {
+          "id": "19303024576",
+          "name": "Workout D26",
+          "type": "workout",
+          "date": "2026-07-14",
+          "distanceKm": 0.0,
+          "durationFmt": "1:14:35",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19303024576"
+        },
+        {
+          "id": "19237219159",
+          "name": "Workout D25",
+          "type": "workout",
+          "date": "2026-07-09",
+          "distanceKm": 0.0,
+          "durationFmt": "1:11:09",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19237219159"
+        },
+        {
+          "id": "19222950994",
+          "name": "Workout D24",
+          "type": "workout",
+          "date": "2026-07-08",
+          "distanceKm": 0.0,
+          "durationFmt": "1:00:48",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19222950994"
+        },
+        {
+          "id": "19208915225",
+          "name": "Workout D23",
+          "type": "workout",
+          "date": "2026-07-07",
+          "distanceKm": 0.0,
+          "durationFmt": "1:16:31",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19208915225"
+        },
+        {
+          "id": "19196174330",
+          "name": "Workout D22",
+          "type": "workout",
+          "date": "2026-07-06",
+          "distanceKm": 0.0,
+          "durationFmt": "1:11:04",
+          "elevationM": 0.0,
+          "avgSpeedKph": 0.0,
+          "avgPace": null,
+          "stravaUrl": "https://www.strava.com/activities/19196174330"
+        }
+      ]
     }
   },
   "recentAll": [
+    {
+      "id": "19412075304",
+      "name": "Workout D31",
+      "type": "workout",
+      "date": "2026-07-22",
+      "distanceKm": 0.0,
+      "durationFmt": "1:21:30",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19412075304"
+    },
+    {
+      "id": "19397289843",
+      "name": "Workout D30",
+      "type": "workout",
+      "date": "2026-07-21",
+      "distanceKm": 0.0,
+      "durationFmt": "1:18:37",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19397289843"
+    },
     {
       "id": "19384498712",
       "name": "WTO",
@@ -584,6 +776,18 @@
       "avgSpeedKph": 19.4,
       "avgPace": null,
       "stravaUrl": "https://www.strava.com/activities/19384498712"
+    },
+    {
+      "id": "19383708063",
+      "name": "Workout D29",
+      "type": "workout",
+      "date": "2026-07-20",
+      "distanceKm": 0.0,
+      "durationFmt": "1:29:16",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19383708063"
     },
     {
       "id": "19376182425",
@@ -612,7 +816,7 @@
     {
       "id": "19339161828",
       "name": "Evening Walk",
-      "type": "hiking",
+      "type": "walking",
       "date": "2026-07-16",
       "distanceKm": 10.2,
       "durationFmt": "1:55:28",
@@ -622,9 +826,33 @@
       "stravaUrl": "https://www.strava.com/activities/19339161828"
     },
     {
+      "id": "19331212317",
+      "name": "Workout D28",
+      "type": "workout",
+      "date": "2026-07-16",
+      "distanceKm": 0.0,
+      "durationFmt": "1:01:00",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19331212317"
+    },
+    {
+      "id": "19317662698",
+      "name": "Workout D27",
+      "type": "workout",
+      "date": "2026-07-15",
+      "distanceKm": 0.0,
+      "durationFmt": "1:16:14",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19317662698"
+    },
+    {
       "id": "19311789877",
       "name": "Night Walk",
-      "type": "hiking",
+      "type": "walking",
       "date": "2026-07-14",
       "distanceKm": 3.24,
       "durationFmt": "37:29",
@@ -644,6 +872,18 @@
       "avgSpeedKph": 19.1,
       "avgPace": null,
       "stravaUrl": "https://www.strava.com/activities/19304183389"
+    },
+    {
+      "id": "19303024576",
+      "name": "Workout D26",
+      "type": "workout",
+      "date": "2026-07-14",
+      "distanceKm": 0.0,
+      "durationFmt": "1:14:35",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19303024576"
     },
     {
       "id": "19295971599",
@@ -672,7 +912,7 @@
     {
       "id": "19256077025",
       "name": "Evening Walk",
-      "type": "hiking",
+      "type": "walking",
       "date": "2026-07-10",
       "distanceKm": 1.87,
       "durationFmt": "20:52",
@@ -694,6 +934,42 @@
       "stravaUrl": "https://www.strava.com/activities/19238177349"
     },
     {
+      "id": "19237219159",
+      "name": "Workout D25",
+      "type": "workout",
+      "date": "2026-07-09",
+      "distanceKm": 0.0,
+      "durationFmt": "1:11:09",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19237219159"
+    },
+    {
+      "id": "19222950994",
+      "name": "Workout D24",
+      "type": "workout",
+      "date": "2026-07-08",
+      "distanceKm": 0.0,
+      "durationFmt": "1:00:48",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19222950994"
+    },
+    {
+      "id": "19208915225",
+      "name": "Workout D23",
+      "type": "workout",
+      "date": "2026-07-07",
+      "distanceKm": 0.0,
+      "durationFmt": "1:16:31",
+      "elevationM": 0.0,
+      "avgSpeedKph": 0.0,
+      "avgPace": null,
+      "stravaUrl": "https://www.strava.com/activities/19208915225"
+    },
+    {
       "id": "19196942311",
       "name": "WTO",
       "type": "cycling",
@@ -704,114 +980,6 @@
       "avgSpeedKph": 18.3,
       "avgPace": null,
       "stravaUrl": "https://www.strava.com/activities/19196942311"
-    },
-    {
-      "id": "19146288018",
-      "name": "WTO",
-      "type": "cycling",
-      "date": "2026-07-02",
-      "distanceKm": 6.11,
-      "durationFmt": "19:34",
-      "elevationM": 22.5,
-      "avgSpeedKph": 18.7,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/19146288018"
-    },
-    {
-      "id": "19122544483",
-      "name": "WTH",
-      "type": "cycling",
-      "date": "2026-06-30",
-      "distanceKm": 6.67,
-      "durationFmt": "22:51",
-      "elevationM": 34.5,
-      "avgSpeedKph": 17.5,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/19122544483"
-    },
-    {
-      "id": "19119172280",
-      "name": "WTO",
-      "type": "cycling",
-      "date": "2026-06-30",
-      "distanceKm": 6.13,
-      "durationFmt": "18:44",
-      "elevationM": 22.4,
-      "avgSpeedKph": 19.6,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/19119172280"
-    },
-    {
-      "id": "19106433037",
-      "name": "WTO",
-      "type": "cycling",
-      "date": "2026-06-29",
-      "distanceKm": 6.24,
-      "durationFmt": "20:12",
-      "elevationM": 22.4,
-      "avgSpeedKph": 18.5,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/19106433037"
-    },
-    {
-      "id": "19086820080",
-      "name": "Yoga Day Pedal Pulse",
-      "type": "running",
-      "date": "2026-06-27",
-      "distanceKm": 10.14,
-      "durationFmt": "1:25:34",
-      "elevationM": 37.4,
-      "avgSpeedKph": 7.1,
-      "avgPace": "8:26",
-      "stravaUrl": "https://www.strava.com/activities/19086820080"
-    },
-    {
-      "id": "19052049757",
-      "name": "Walk-in-Rain",
-      "type": "hiking",
-      "date": "2026-06-24",
-      "distanceKm": 5.03,
-      "durationFmt": "1:03:07",
-      "elevationM": 37.3,
-      "avgSpeedKph": 4.8,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/19052049757"
-    },
-    {
-      "id": "18967399055",
-      "name": "WTO",
-      "type": "cycling",
-      "date": "2026-06-18",
-      "distanceKm": 5.69,
-      "durationFmt": "16:10",
-      "elevationM": 19.7,
-      "avgSpeedKph": 21.1,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/18967399055"
-    },
-    {
-      "id": "18938737254",
-      "name": "WTO",
-      "type": "cycling",
-      "date": "2026-06-16",
-      "distanceKm": 7.39,
-      "durationFmt": "23:17",
-      "elevationM": 40.2,
-      "avgSpeedKph": 19.1,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/18938737254"
-    },
-    {
-      "id": "18878381319",
-      "name": "WTH",
-      "type": "cycling",
-      "date": "2026-06-11",
-      "distanceKm": 6.43,
-      "durationFmt": "22:41",
-      "elevationM": 29.9,
-      "avgSpeedKph": 17.0,
-      "avgPace": null,
-      "stravaUrl": "https://www.strava.com/activities/18878381319"
     }
   ]
 }

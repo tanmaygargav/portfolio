@@ -37,7 +37,9 @@
       { "id": "running",  "label": "Running",  "icon": "🏃" },
       { "id": "cycling",  "label": "Cycling",  "icon": "🚴" },
       { "id": "swimming", "label": "Swimming", "icon": "🏊" },
-      { "id": "hiking",   "label": "Hiking",   "icon": "🥾" }
+      { "id": "hiking",   "label": "Hiking",   "icon": "🥾" },
+      { "id": "walking",  "label": "Walking",  "icon": "🚶" },
+      { "id": "workout",  "label": "Workout",  "icon": "💪" }
     ]
   },
 

@@ -631,6 +631,30 @@
         </div>
       </div>
     </div>
+
+    <!-- WALKING -->
+    <div class="tab-panel" id="panel-walking">
+      <div class="stats-row" id="wlk-stats-row"></div>
+      <div class="fitness-grid">
+        <div class="card">
+          <h3>Monthly Distance (km)</h3>
+          <div class="chart-wrap"><canvas id="chart-wlk-monthly"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Recent Walks</h3>
+          <div class="activity-list" id="wlk-recent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKOUT -->
+    <div class="tab-panel" id="panel-workout">
+      <div class="stats-row" id="wkt-stats-row"></div>
+      <div class="card" style="margin-top:1rem;">
+        <h3>Recent Workouts</h3>
+        <div class="activity-list" id="wkt-recent"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1003,10 +1027,12 @@ async function applyStrava(strava, cfg) {
 
   // Activity mix donut chart (by count — avoids mixing units across sports)
   makeDonutChart("chart-activity-mix", [
-    { label: "Running",  count: (bt.running?.stats?.totalRuns      || 0), color: "#00d4ff" },
-    { label: "Cycling",  count: (bt.cycling?.stats?.totalRides     || 0), color: "#00ff87" },
-    { label: "Swimming", count: (bt.swimming?.stats?.totalSessions  || 0), color: "#7c3aed" },
-    { label: "Hiking",   count: (bt.hiking?.stats?.totalHikes       || 0), color: "#f59e0b" },
+    { label: "Running",  count: (bt.running?.stats?.totalRuns        || 0), color: "#00d4ff" },
+    { label: "Cycling",  count: (bt.cycling?.stats?.totalRides       || 0), color: "#00ff87" },
+    { label: "Walking",  count: (bt.walking?.stats?.totalWalks       || 0), color: "#ec4899" },
+    { label: "Workout",  count: (bt.workout?.stats?.totalWorkouts    || 0), color: "#ef4444" },
+    { label: "Swimming", count: (bt.swimming?.stats?.totalSessions   || 0), color: "#7c3aed" },
+    { label: "Hiking",   count: (bt.hiking?.stats?.totalHikes        || 0), color: "#f59e0b" },
   ]);
 
   // ── RUNNING ─────────────────────────────────────────────────
@@ -1053,10 +1079,13 @@ async function applyStrava(strava, cfg) {
   // ── SWIMMING ────────────────────────────────────────────────
   const swm = bt.swimming || {};
   const ss  = swm.stats || {};
+  // Swimming distances stored in km but displayed in meters (pool scale)
+  const swmTotalM  = Math.round((ss.totalDistanceKm  || 0) * 1000);
+  const swmLongestM = Math.round((ss.longestSessionsKm || 0) * 1000);
   renderStatsRow("swm-stats-row", [
-    { value: ss.totalSessions || 0,     label: "Sessions" },
-    { value: (ss.totalDistanceKm || 0) + " km", label: "Total Distance" },
-    { value: ss.poolSessions || 0,      label: "Pool" },
+    { value: ss.totalSessions || 0,   label: "Sessions" },
+    { value: swmTotalM + " m",        label: "Total Distance" },
+    { value: ss.poolSessions || 0,    label: "Pool" },
     { value: ss.openWaterSessions || 0, label: "Open Water" },
   ]);
   makeBarChart("chart-swm-monthly", swm.monthlyKm, "#7c3aed");
@@ -1066,13 +1095,34 @@ async function applyStrava(strava, cfg) {
   const hik = bt.hiking || {};
   const hs  = hik.stats || {};
   renderStatsRow("hik-stats-row", [
-    { value: hs.totalHikes || 0,         label: "Hikes" },
-    { value: (hs.totalDistanceKm || 0) + " km",  label: "Total Distance" },
-    { value: (hs.totalElevationM || 0) + " m",   label: "Elevation" },
-    { value: (hs.longestHikesKm || 0) + " km",   label: "Longest Hike" },
+    { value: hs.totalHikes || 0,                        label: "Hikes" },
+    { value: (hs.totalDistanceKm || 0) + " km",         label: "Total Distance" },
+    { value: (hs.totalElevationM || 0) + " m",          label: "Elevation" },
+    { value: (hs.longestHikesKm  || 0) + " km",         label: "Longest Hike" },
   ]);
   makeBarChart("chart-hik-monthly", hik.monthlyKm, "#f59e0b");
   renderActivityList("hik-recent", hik.recentActivities || [], recentCount);
+
+  // ── WALKING ─────────────────────────────────────────────────
+  const wlk = bt.walking || {};
+  const ws  = wlk.stats || {};
+  renderStatsRow("wlk-stats-row", [
+    { value: ws.totalWalks || 0,                        label: "Walks" },
+    { value: (ws.totalDistanceKm || 0) + " km",         label: "Total Distance" },
+    { value: (ws.totalElevationM || 0) + " m",          label: "Elevation" },
+    { value: (ws.longestWalksKm  || 0) + " km",         label: "Longest Walk" },
+  ]);
+  makeBarChart("chart-wlk-monthly", wlk.monthlyKm, "#ec4899");
+  renderActivityList("wlk-recent", wlk.recentActivities || [], recentCount);
+
+  // ── WORKOUT ─────────────────────────────────────────────────
+  const wkt = bt.workout || {};
+  const wts = wkt.stats || {};
+  renderStatsRow("wkt-stats-row", [
+    { value: wts.totalWorkouts || 0,   label: "Sessions" },
+    { value: (wts.totalHours || 0) + " hrs", label: "Total Time" },
+  ]);
+  renderActivityList("wkt-recent", wkt.recentActivities || [], recentCount);
 
   // Sync info
   if (strava.lastUpdated) {
