@@ -49,19 +49,19 @@ All content is controlled via `config.json`. Never edit `index.html` for content
 ```jsonc
 {
   "site": {
-    "name": "Tanmay Gargav",
-    "title": "Technical Architect & Team Lead",
-    "tagline": "...",
-    "email": "gargavtanmay@gmail.com",
+    "name": "Your Name",
+    "title": "Your Title",
+    "tagline": "Your tagline here",
+    "email": "your@email.com",
     "accentColor": "#00d4ff",
     "accentColorSecondary": "#00ff87"
   },
   "social": {
-    "github": "https://github.com/tanmaygargav",
-    "linkedin": "https://www.linkedin.com/in/tanmay-gargav/",
-    "strava": "https://www.strava.com/athletes/195054289",
-    "instagram": "https://www.instagram.com/tanmay.gargav",
-    "zoho": "tanmay.gargav@zohomail.com"
+    "github": "https://github.com/your-username",
+    "linkedin": "https://www.linkedin.com/in/your-profile/",
+    "strava": "https://www.strava.com/athletes/your-athlete-id",
+    "instagram": "https://www.instagram.com/your-handle",
+    "zoho": "your@zohomail.com"
   },
   "sections": [
     { "id": "hero",        "enabled": true },
