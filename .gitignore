@@ -1,24 +1,53 @@
-# Environment & secrets
+# ── Portfolio-specific ────────────────────────────────────────────
 .env
 *.env
+.strava_token_cache.json
+sync.log
+admin.html
 
-# Python
+# ── Python ────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyz
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+.installed.cfg
 venv/
 .venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+.pypirc
 
-# macOS
+# ── macOS ─────────────────────────────────────────────────────────
 .DS_Store
 .AppleDouble
 
-# Logs
-*.log
-sync.log
-
-# Admin panel (local only, not for public deployment)
-admin.html
-
-# Token cache
-.strava_token_cache.json
+# ── Editors ───────────────────────────────────────────────────────
+.vscode/
+.idea/
+tempCodeRunnerFile.py
