@@ -30,6 +30,7 @@
 
   "fitness": {
     "stravaProfileUrl": "https://www.strava.com/athletes/195054289",
+    "recentActivitiesCount": 5,
     "defaultTab": "all",
     "tabs": [
       { "id": "all",      "label": "All",      "icon": "⚡" },
