@@ -86,9 +86,11 @@
       font-weight: 700;
       font-size: 1.1rem;
       color: var(--text);
-      letter-spacing: -0.02em;
+      letter-spacing: 0.01em;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
     }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo .bracket { color: var(--accent); }
+    .nav-logo .slash { color: var(--accent-secondary); }
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -827,10 +829,9 @@ async function applyConfig(cfg) {
     document.documentElement.style.setProperty("--accent2", cfg.site.accentColorSecondary);
   }
 
-  // Nav logo
-  const name = cfg.site?.name || "Portfolio";
+  // Nav logo — brand mark
   document.getElementById("nav-name").innerHTML =
-    name.split(" ")[0] + `<span style="color:var(--accent)">.</span>`;
+    `<span class="bracket">&lt;</span>TG<span class="slash"> /&gt;</span>`;
 
   // Nav links
   const sections = (cfg.sections || []).filter(s => s.enabled);
