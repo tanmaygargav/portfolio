@@ -2,14 +2,22 @@
 """
 Portfolio Sync Script
 ─────────────────────────────────────────────────────────
-Fetches data from Strava API and Google Sheets,
+Fetches data from Strava CSV export and Google Sheets,
 generates JSON data files in /data, then commits
 and pushes to GitHub.
 
 Usage:
-  python sync.py           # auto mode (used by cron)
-  python sync.py --manual  # manual run, verbose output
-  python sync.py --dry-run # fetch + generate, skip git push
+  python sync.py                        # auto mode (used by cron)
+  python sync.py --manual               # manual run, verbose output
+  python sync.py --dry-run              # fetch + generate, skip git push
+  python sync.py --csv activities.csv   # use a specific CSV file
+
+Strava CSV Export:
+  1. Go to Strava → Settings → My Account → Download or Delete
+  2. Request your archive — Strava emails a zip file
+  3. Extract activities.csv from the zip
+  4. Place it at: strava_export/activities.csv  (or pass --csv path)
+  5. Run: python sync.py --manual
 
 Requirements:
   pip install requests python-dotenv
@@ -55,7 +63,12 @@ TOKEN_CACHE = ROOT / ".strava_token_cache.json"
 parser = argparse.ArgumentParser(description="Portfolio sync script")
 parser.add_argument("--manual",  action="store_true", help="Verbose output for manual runs")
 parser.add_argument("--dry-run", action="store_true", help="Fetch data but skip git push")
+parser.add_argument("--csv",     metavar="PATH",      help="Path to Strava activities.csv export")
 args = parser.parse_args()
+
+# Default CSV path if not specified
+STRAVA_CSV_DEFAULT = ROOT / "strava_export" / "activities.csv"
+STRAVA_CSV_PATH    = Path(args.csv) if args.csv else STRAVA_CSV_DEFAULT
 
 log_level = logging.DEBUG if args.manual else logging.INFO
 logging.basicConfig(
@@ -168,19 +181,24 @@ def _fmt_duration(seconds):
 
 
 def _activity_type_key(strava_type):
-    """Map Strava sport types to our four categories."""
+    """Map Strava sport types to portfolio categories."""
     mapping = {
-        "Run":          "running",
-        "VirtualRun":   "running",
-        "TrailRun":     "running",
-        "Ride":         "cycling",
-        "VirtualRide":  "cycling",
+        "Run":              "running",
+        "VirtualRun":       "running",
+        "TrailRun":         "running",
+        "Ride":             "cycling",
+        "VirtualRide":      "cycling",
         "MountainBikeRide": "cycling",
-        "GravelRide":   "cycling",
-        "Swim":         "swimming",
-        "Hike":         "hiking",
-        "Walk":         "hiking",
-        "BackcountrySki": "hiking",
+        "GravelRide":       "cycling",
+        "Swim":             "swimming",
+        "Hike":             "hiking",
+        "BackcountrySki":   "hiking",
+        "Walk":             "walking",
+        "Workout":          "workout",
+        "WeightTraining":   "workout",
+        "Yoga":             "workout",
+        "CrossFit":         "workout",
+        "Elliptical":       "workout",
     }
     return mapping.get(strava_type, None)
 
@@ -194,6 +212,8 @@ def process_strava_activities(activities):
         "cycling":  {"activities": [], "monthlyKm": defaultdict(float)},
         "swimming": {"activities": [], "monthlyKm": defaultdict(float)},
         "hiking":   {"activities": [], "monthlyKm": defaultdict(float)},
+        "walking":  {"activities": [], "monthlyKm": defaultdict(float)},
+        "workout":  {"activities": [], "monthlyKm": defaultdict(float)},
     }
     all_clean = []
 
@@ -292,6 +312,8 @@ def process_strava_activities(activities):
     cyc_acts  = by_type["cycling"]["activities"]
     swm_acts  = by_type["swimming"]["activities"]
     hik_acts  = by_type["hiking"]["activities"]
+    wlk_acts  = by_type["walking"]["activities"]
+    wkt_acts  = by_type["workout"]["activities"]
 
     r_stats = running_stats(run_acts)
     output = {
@@ -327,8 +349,8 @@ def process_strava_activities(activities):
             "swimming": {
                 "stats": {
                     **generic_stats(swm_acts, "Sessions"),
-                    "poolSessions":      len([a for a in swm_acts if a["distanceKm"] < 2]),
-                    "openWaterSessions": len([a for a in swm_acts if a["distanceKm"] >= 2]),
+                    "poolSessions":      len([a for a in swm_acts if a["distanceKm"] < 2]),   # pool swims < 2km
+                    "openWaterSessions": len([a for a in swm_acts if a["distanceKm"] >= 2]),  # open water >= 2km
                 },
                 "recentActivities": swm_acts[:10],
                 "monthlyKm":        monthly_series(by_type["swimming"]["monthlyKm"]),
@@ -338,10 +360,136 @@ def process_strava_activities(activities):
                 "recentActivities": hik_acts[:10],
                 "monthlyKm":        monthly_series(by_type["hiking"]["monthlyKm"]),
             },
+            "walking": {
+                "stats": {
+                    **generic_stats(wlk_acts, "Walks"),
+                    "totalWalks": len(wlk_acts),
+                },
+                "recentActivities": wlk_acts[:10],
+                "monthlyKm":        monthly_series(by_type["walking"]["monthlyKm"]),
+            },
+            "workout": {
+                "stats": {
+                    "totalWorkouts": len(wkt_acts),
+                    "totalHours": round(sum(
+                        int(a["durationFmt"].split(":")[-1])
+                        + int(a["durationFmt"].split(":")[-2]) * 60
+                        + (int(a["durationFmt"].split(":")[0]) * 3600 if a["durationFmt"].count(":") == 2 else 0)
+                        for a in wkt_acts
+                    ) / 3600, 1),
+                },
+                "recentActivities": wkt_acts[:10],
+            },
         },
         "recentAll": sorted(all_clean, key=lambda x: x["date"], reverse=True)[:20],
     }
     return output
+
+
+# ─── STRAVA CSV EXPORT ───────────────────────────────────────────────────────
+
+def _parse_strava_date(raw):
+    """Parse Strava's various date formats into YYYY-MM-DD."""
+    if not raw:
+        return ""
+    raw = raw.strip()
+    formats = [
+        "%b %d, %Y, %I:%M:%S %p",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%SZ",
+        "%Y-%m-%d",
+        "%m/%d/%Y %H:%M:%S",
+    ]
+    for fmt in formats:
+        try:
+            return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    return raw[:10]
+
+
+def _col(row, *keys):
+    """Get first matching column from a CSV row (handles column name variations)."""
+    for key in keys:
+        if key in row and row[key].strip():
+            return row[key].strip()
+    return ""
+
+
+def process_strava_csv(csv_path):
+    """
+    Parse Strava bulk export activities.csv and return
+    the same structure as process_strava_activities().
+    """
+    log.info("Reading Strava CSV: %s", csv_path)
+
+    if not Path(csv_path).exists():
+        log.error("CSV file not found: %s", csv_path)
+        return None
+
+    with open(csv_path, encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    log.info("Found %d rows in CSV", len(rows))
+
+    raw_activities = []
+
+    for row in rows:
+        raw_type = _col(row, "Activity Type", "Sport Type", "Type")
+        key = _activity_type_key(raw_type)
+        if key is None:
+            continue
+
+        # Distance
+        raw_dist = _col(row, "Distance", "Distance.1")
+        try:
+            dist_raw = float(raw_dist.replace(",", "") or 0)
+            dist_km  = round(dist_raw / 1000, 2)  # Strava CSV always exports distance in meters
+        except ValueError:
+            dist_km = 0.0
+
+        # Duration
+        raw_time = _col(row, "Moving Time", "Elapsed Time")
+        try:
+            duration_secs = int(float(raw_time.replace(",", "") or 0))
+        except ValueError:
+            duration_secs = 0
+
+        # Elevation
+        raw_elev = _col(row, "Elevation Gain", "Total Elevation Gain")
+        try:
+            elev_m = round(float(raw_elev.replace(",", "") or 0), 1)
+        except ValueError:
+            elev_m = 0.0
+
+        # Speed
+        raw_speed = _col(row, "Average Speed", "Average Speed.1")
+        try:
+            speed_mps = float(raw_speed.replace(",", "") or 0)
+            if speed_mps > 10 and key != "cycling":
+                speed_mps = speed_mps / 3.6
+        except ValueError:
+            speed_mps = 0.0
+
+        date_str = _parse_strava_date(_col(row, "Activity Date", "Start Date", "Date"))
+        act_id   = _col(row, "Activity ID", "ID")
+        act_name = _col(row, "Activity Name", "Name") or "Activity"
+
+        raw_activities.append({
+            "id":           act_id,
+            "name":         act_name,
+            "type":         raw_type,
+            "sport_type":   raw_type,
+            "start_date_local": date_str,
+            "distance":     dist_km * 1000,
+            "moving_time":  duration_secs,
+            "total_elevation_gain": elev_m,
+            "average_speed": speed_mps,
+        })
+
+    log.info("Parsed %d matching activities from CSV", len(raw_activities))
+    return process_strava_activities(raw_activities)
 
 
 # ─── GOOGLE SHEETS ───────────────────────────────────────────────────────────
@@ -467,10 +615,25 @@ def main():
             (DATA / "strava.json").write_text(json.dumps(strava, indent=2, ensure_ascii=False))
             log.info("✓ strava.json written (%d activities)", len(raw))
         except Exception as e:
-            log.error("Strava sync failed: %s", e)
+            log.error("Strava API sync failed: %s", e)
             errors.append("strava")
+    elif STRAVA_CSV_PATH.exists():
+        # ── CSV export mode ───────────────────────────────────
+        log.info("Using Strava CSV export: %s", STRAVA_CSV_PATH)
+        try:
+            strava = process_strava_csv(STRAVA_CSV_PATH)
+            if strava:
+                (DATA / "strava.json").write_text(json.dumps(strava, indent=2, ensure_ascii=False))
+                log.info("✓ strava.json written from CSV (%d total activities)",
+                         strava["summary"]["totalActivities"])
+            else:
+                log.error("CSV processing returned no data")
+                errors.append("strava-csv")
+        except Exception as e:
+            log.error("Strava CSV sync failed: %s", e)
+            errors.append("strava-csv")
     else:
-        log.warning("Strava credentials not set — skipping Strava sync")
+        log.warning("No Strava source found — place activities.csv in strava_export/ folder")
 
     # ── Google Sheets ─────────────────────────────────────────
     if GOOGLE_SHEETS_ID:
