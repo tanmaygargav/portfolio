@@ -554,9 +554,15 @@
     <!-- ALL -->
     <div class="tab-panel active" id="panel-all">
       <div class="stats-row" id="all-stats-row"></div>
-      <div class="card">
-        <h3 style="margin-bottom:1rem;">Recent Activities</h3>
-        <div class="activity-list" id="all-recent"></div>
+      <div class="fitness-grid" style="margin-top:1rem;">
+        <div class="card">
+          <h3>Activity Mix</h3>
+          <div class="chart-wrap"><canvas id="chart-activity-mix"></canvas></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:1rem;">Recent Activities</h3>
+          <div class="activity-list" id="all-recent"></div>
+        </div>
       </div>
     </div>
 
@@ -715,6 +721,57 @@ function makeBarChart(canvasId, monthlyKm, color) {
   });
 }
 
+// ─── DONUT CHART ────────────────────────────────────────────────
+function makeDonutChart(canvasId, data) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const total = data.reduce((s, d) => s + d.count, 0);
+  if (total === 0) {
+    canvas.closest('.chart-wrap').innerHTML =
+      `<div class="empty-state" style="height:100%;display:flex;align-items:center;justify-content:center;">
+        <span>No data yet — sync your Strava</span>
+      </div>`;
+    return;
+  }
+  new Chart(canvas, {
+    type: "doughnut",
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{
+        data: data.map(d => d.count),
+        backgroundColor: data.map(d => d.color + "cc"),
+        borderColor: data.map(d => d.color),
+        borderWidth: 2,
+        hoverOffset: 6,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: "65%",
+      plugins: {
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: {
+            color: "#aaa",
+            padding: 14,
+            font: { size: 12, family: "'Inter', sans-serif" },
+            usePointStyle: true,
+            pointStyleWidth: 10,
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) =>
+              ` ${ctx.label}: ${ctx.parsed} activities (${Math.round(ctx.parsed / total * 100)}%)`,
+          },
+        },
+      },
+    },
+  });
+}
+
 // ─── STATS ROW ──────────────────────────────────────────────────
 function renderStatsRow(containerId, stats) {
   const el = document.getElementById(containerId);
@@ -730,14 +787,15 @@ function renderStatsRow(containerId, stats) {
 // ─── ACTIVITY LIST ──────────────────────────────────────────────
 const TYPE_ICONS = { running:"🏃", cycling:"🚴", swimming:"🏊", hiking:"🥾" };
 
-function renderActivityList(containerId, activities) {
+function renderActivityList(containerId, activities, limit) {
   const el = document.getElementById(containerId);
   if (!el) return;
-  if (!activities || !activities.length) {
+  const items = limit ? (activities || []).slice(0, limit) : (activities || []);
+  if (!items.length) {
     el.innerHTML = `<div class="empty-state">No activities yet. <a href="#" onclick="return false">Connect Strava to get started.</a></div>`;
     return;
   }
-  el.innerHTML = activities.map(a => `
+  el.innerHTML = items.map(a => `
     <a class="activity-item" href="${a.stravaUrl || '#'}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
       <div>
         <div class="activity-name">
@@ -919,6 +977,8 @@ async function applyStrava(strava, cfg) {
     });
   });
 
+  const recentCount = cfg?.fitness?.recentActivitiesCount || 5;
+
   // ── ALL tab ─────────────────────────────────────────────────
   renderStatsRow("all-stats-row", [
     { value: sum.totalActivities || 0, label: "Activities" },
@@ -926,7 +986,15 @@ async function applyStrava(strava, cfg) {
     { value: (sum.totalHours || 0) + " hrs", label: "Hours" },
     { value: (sum.totalElevationM || 0) + " m", label: "Elevation" },
   ]);
-  renderActivityList("all-recent", strava.recentAll || []);
+  renderActivityList("all-recent", strava.recentAll || [], recentCount);
+
+  // Activity mix donut chart (by count — avoids mixing units across sports)
+  makeDonutChart("chart-activity-mix", [
+    { label: "Running",  count: (bt.running?.stats?.totalRuns      || 0), color: "#00d4ff" },
+    { label: "Cycling",  count: (bt.cycling?.stats?.totalRides     || 0), color: "#00ff87" },
+    { label: "Swimming", count: (bt.swimming?.stats?.totalSessions  || 0), color: "#7c3aed" },
+    { label: "Hiking",   count: (bt.hiking?.stats?.totalHikes       || 0), color: "#f59e0b" },
+  ]);
 
   // ── RUNNING ─────────────────────────────────────────────────
   const run = bt.running || {};
@@ -955,7 +1023,7 @@ async function applyStrava(strava, cfg) {
       </div>
     `;
   }).join("");
-  renderActivityList("run-recent", run.recentActivities || []);
+  renderActivityList("run-recent", run.recentActivities || [], recentCount);
 
   // ── CYCLING ─────────────────────────────────────────────────
   const cyc = bt.cycling || {};
@@ -967,7 +1035,7 @@ async function applyStrava(strava, cfg) {
     { value: (cs.longestRidesKm || 0) + " km",  label: "Longest Ride" },
   ]);
   makeBarChart("chart-cyc-monthly", cyc.monthlyKm, "#00ff87");
-  renderActivityList("cyc-recent", cyc.recentActivities || []);
+  renderActivityList("cyc-recent", cyc.recentActivities || [], recentCount);
 
   // ── SWIMMING ────────────────────────────────────────────────
   const swm = bt.swimming || {};
@@ -979,7 +1047,7 @@ async function applyStrava(strava, cfg) {
     { value: ss.openWaterSessions || 0, label: "Open Water" },
   ]);
   makeBarChart("chart-swm-monthly", swm.monthlyKm, "#7c3aed");
-  renderActivityList("swm-recent", swm.recentActivities || []);
+  renderActivityList("swm-recent", swm.recentActivities || [], recentCount);
 
   // ── HIKING ──────────────────────────────────────────────────
   const hik = bt.hiking || {};
@@ -991,7 +1059,7 @@ async function applyStrava(strava, cfg) {
     { value: (hs.longestHikesKm || 0) + " km",   label: "Longest Hike" },
   ]);
   makeBarChart("chart-hik-monthly", hik.monthlyKm, "#f59e0b");
-  renderActivityList("hik-recent", hik.recentActivities || []);
+  renderActivityList("hik-recent", hik.recentActivities || [], recentCount);
 
   // Sync info
   if (strava.lastUpdated) {
