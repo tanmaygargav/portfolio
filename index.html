@@ -383,6 +383,26 @@
     @media (max-width: 700px) { .fitness-grid { grid-template-columns: 1fr; } }
 
     .chart-wrap { position: relative; height: 360px; }
+    .donut-legend {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      justify-content: center;
+      gap: 0.5rem 1.5rem;
+      margin-top: 1.25rem;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .donut-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
     .pb-grid {
       display: grid;
@@ -678,6 +698,7 @@
         <div class="card">
           <h3>Activity Mix</h3>
           <div class="chart-wrap"><canvas id="chart-activity-mix"></canvas></div>
+          <div class="donut-legend" id="donut-legend"></div>
         </div>
         <div class="card">
           <h3 style="margin-bottom:1rem;">Recent Activities</h3>
@@ -794,7 +815,7 @@
       <h2>Get in touch</h2>
       <p style="margin-top:0.75rem;color:var(--muted);" id="contact-email-text">Have a project in mind, want to collaborate, or just say hello?</p>
       <a class="contact-email-cta" id="contact-email-cta" href="mailto:gargavtanmay@gmail.com">
-        <span>✉</span> gargavtanmay@gmail.com
+        <span>✉</span> Send me an email
       </a>
       <div class="contact-divider">or find me on</div>
       <div class="social-links" id="social-links"></div>
@@ -971,17 +992,7 @@ function makeDonutChart(canvasId, data) {
       maintainAspectRatio: false,
       cutout: "65%",
       plugins: {
-        legend: {
-          display: true,
-          position: "bottom",
-          labels: {
-            color: c.tick,
-            padding: 20,
-            font: { size: 13, family: "'Inter', sans-serif" },
-            usePointStyle: true,
-            pointStyleWidth: 12,
-          },
-        },
+        legend: { display: false },
         tooltip: {
           callbacks: {
             label: (ctx) =>
@@ -991,6 +1002,16 @@ function makeDonutChart(canvasId, data) {
       },
     },
   });
+
+  // Custom legend for donut chart
+  const legendEl = document.getElementById("donut-legend");
+  if (legendEl) {
+    legendEl.innerHTML = data.map(d =>
+      `<div class="donut-legend-item">
+        <span class="donut-legend-dot" style="background:${d.color}"></span>${d.label}
+      </div>`
+    ).join("");
+  }
 }
 
 // ─── STATS ROW ──────────────────────────────────────────────────
@@ -1084,9 +1105,7 @@ async function applyConfig(cfg) {
   const emailVal = cfg.site?.email || "";
   const emailCta = document.getElementById("contact-email-cta");
   if (emailCta && emailVal) {
-    const emailIcon = emailVal.endsWith("@gmail.com") ? SI.gmail : "✉";
     emailCta.href = `mailto:${emailVal}`;
-    emailCta.innerHTML = `<span>${emailIcon}</span> ${emailVal}`;
   }
 
   // Social links (no email — it has its own CTA above)
