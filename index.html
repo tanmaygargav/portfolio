@@ -382,7 +382,7 @@
     }
     @media (max-width: 700px) { .fitness-grid { grid-template-columns: 1fr; } }
 
-    .chart-wrap { position: relative; height: 220px; }
+    .chart-wrap { position: relative; height: 300px; }
 
     .pb-grid {
       display: grid;
@@ -514,13 +514,49 @@
 
     /* ── CONTACT ──────────────────────────────────────────────── */
     .contact-inner {
-      max-width: 560px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-inner h2 { font-size: 2rem; }
+    .contact-email-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #0a0a0a;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+    .contact-email-cta:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+    .contact-email-cta span { font-size: 1.1rem; }
+    .contact-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .contact-divider::before,
+    .contact-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
     .social-links {
       display: flex;
       gap: 0.75rem;
-      margin-top: 2rem;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .social-link {
       display: inline-flex;
@@ -756,7 +792,11 @@
     <div class="section-label">Let's connect</div>
     <div class="contact-inner">
       <h2>Get in touch</h2>
-      <p style="margin-top:0.75rem;" id="contact-email-text">Drop me an email or find me on any of these platforms.</p>
+      <p style="margin-top:0.75rem;color:var(--muted);" id="contact-email-text">Have a project in mind, want to collaborate, or just say hello?</p>
+      <a class="contact-email-cta" id="contact-email-cta" href="mailto:gargavtanmay@gmail.com">
+        <span>✉</span> gargavtanmay@gmail.com
+      </a>
+      <div class="contact-divider">or find me on</div>
       <div class="social-links" id="social-links"></div>
     </div>
   </div>
@@ -1040,13 +1080,17 @@ async function applyConfig(cfg) {
     { key:"twitter",   label:"X / Twitter", icon: SI.twitter,   href: v => v, placeholder: true },
     { key:"zoho",      label:"Zoho Mail",   icon: SI.zoho,      href: v => `mailto:${v}` },
   ];
+  // Email CTA button
   const emailVal = cfg.site?.email || "";
-  const emailIcon = emailVal.endsWith("@gmail.com") ? SI.gmail : "✉";
-  const emailLink = emailVal
-    ? `<a class="social-link" href="mailto:${emailVal}" title="${emailVal}">${emailIcon} Gmail</a>` : "";
+  const emailCta = document.getElementById("contact-email-cta");
+  if (emailCta && emailVal) {
+    const emailIcon = emailVal.endsWith("@gmail.com") ? SI.gmail : "✉";
+    emailCta.href = `mailto:${emailVal}`;
+    emailCta.innerHTML = `<span>${emailIcon}</span> ${emailVal}`;
+  }
 
+  // Social links (no email — it has its own CTA above)
   document.getElementById("social-links").innerHTML =
-    emailLink +
     links
       .filter(l => social[l.key] || l.placeholder)
       .map(l => {
