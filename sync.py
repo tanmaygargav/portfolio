@@ -551,20 +551,54 @@ def process_content(rows):
     }
 
 
+def _is_url(val):
+    """Check if a string looks like a full URL."""
+    return val.startswith("http://") or val.startswith("https://")
+
+
+def _gdrive_direct_url(url):
+    """Convert Google Drive sharing URL to a direct image URL."""
+    # Handle: https://drive.google.com/file/d/FILE_ID/view?...
+    import re
+    m = re.match(r"https://drive\.google\.com/file/d/([^/]+)", url)
+    if m:
+        return f"https://drive.google.com/uc?export=view&id={m.group(1)}"
+    # Handle: https://drive.google.com/open?id=FILE_ID
+    m = re.match(r"https://drive\.google\.com/open\?id=([^&]+)", url)
+    if m:
+        return f"https://drive.google.com/uc?export=view&id={m.group(1)}"
+    return url
+
+
 def process_photos(rows):
-    """Convert Photos sheet rows into photos.json structure."""
+    """Convert Photos sheet rows into photos.json structure.
+
+    The File/URL column supports:
+      - Full URLs (https://...) — used as-is (Google Drive links auto-converted)
+      - Local filenames (photo.jpg) — prefixed with photos/
+    """
     photos = []
     for i, row in enumerate(rows, 1):
-        file_val = (row.get("File") or row.get("Filename") or "").strip()
-        if file_val:
-            photos.append({
-                "id":       i,
-                "file":     f"photos/{file_val}",
-                "title":    (row.get("Title") or "").strip(),
-                "location": (row.get("Location") or "").strip(),
-                "date":     (row.get("Date") or "").strip(),
-                "tags":     [t.strip() for t in (row.get("Tags") or "").split(",") if t.strip()],
-            })
+        file_val = (row.get("File") or row.get("Filename") or row.get("URL") or "").strip()
+        if not file_val:
+            continue
+
+        # Resolve file path: full URL or local filename
+        if _is_url(file_val):
+            src = _gdrive_direct_url(file_val)
+        else:
+            src = f"photos/{file_val}"
+
+        photos.append({
+            "id":       i,
+            "file":     src,
+            "title":    (row.get("Title") or "").strip(),
+            "location": (row.get("Location") or "").strip(),
+            "date":     (row.get("Date") or "").strip(),
+            "tags":     [t.strip() for t in (row.get("Tags") or "").split(",") if t.strip()],
+        })
+
+    log.info("Processed %d photos", len(photos))
     return {
         "lastUpdated": datetime.now(timezone.utc).isoformat(),
         "photos": photos,

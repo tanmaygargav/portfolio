@@ -458,6 +458,17 @@
     .photo-item:hover .photo-overlay { opacity: 1; }
     .photo-title { font-size: 0.9rem; font-weight: 600; color: #fff; }
     .photo-loc   { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+    .photo-date  { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 0.15rem; }
+    .photo-tags  { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.4rem; }
+    .photo-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      background: rgba(0, 212, 255, 0.2);
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
 
     .photo-placeholder {
       background: var(--bg2);
@@ -1287,16 +1298,20 @@ async function applyPhotos(photosData) {
     return;
   }
 
-  grid.innerHTML = photos.map(p => `
+  grid.innerHTML = photos.map(p => {
+    const tags = (p.tags || []).map(t => `<span class="photo-tag">${t}</span>`).join("");
+    return `
     <div class="photo-item" data-src="${p.file}" data-title="${p.title || ""}">
       <img src="${p.file}" alt="${p.title || ""}" loading="lazy"
            onerror="this.parentElement.style.display='none'" />
       <div class="photo-overlay">
         <div class="photo-title">${p.title || ""}</div>
         <div class="photo-loc">${p.location || ""}</div>
+        ${p.date ? `<div class="photo-date">${p.date}</div>` : ""}
+        ${tags ? `<div class="photo-tags">${tags}</div>` : ""}
       </div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 
   grid.querySelectorAll(".photo-item").forEach(item => {
     item.addEventListener("click", () => {
