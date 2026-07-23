@@ -1,26 +1,16 @@
 {
-  "lastUpdated": "2026-07-23T15:37:39.736105+00:00",
+  "lastUpdated": "2026-07-23T18:14:10.297635+00:00",
   "photos": [
     {
       "id": 1,
-      "file": "https://drive.google.com/uc?export=view&id=1l8aS69qZTMdULVroXmiI-3F33I3h4Ydg",
+      "file": "https://lh3.googleusercontent.com/d/1l8aS69qZTMdULVroXmiI-3F33I3h4Ydg",
       "title": "Mountain Trail",
       "location": "Himalayas",
       "date": "2025-11-10",
       "tags": [
-        "landscape",
-        "hiking"
-      ]
-    },
-    {
-      "id": 2,
-      "file": "https://lh3.googleusercontent.com/d/1l8aS69qZTMdULVroXmiI-3F33I3h4Ydg",
-      "title": "City Lights",
-      "location": "Mumbai",
-      "date": "2026-01-15",
-      "tags": [
-        "urban",
-        "night"
+        "Landscape",
+        "Hiking",
+        "Nature"
       ]
     }
   ]
