@@ -64,7 +64,18 @@ Level values: `daily` / `proficient` / `familiar`
 ### Photos tab columns:
 | File | Title | Location | Date | Tags |
 |------|-------|----------|------|------|
-| photo1.jpg | Mountain Trail | Himalayas | 2025-11-10 | landscape,hiking |
+| sunset.jpg | Mountain Trail | Himalayas | 2025-11-10 | landscape,hiking |
+| https://drive.google.com/file/d/ABC123/view | City Lights | Mumbai | 2026-01-15 | urban,night |
+
+The **File** column accepts:
+- **Local filenames** (e.g., `sunset.jpg`) — must exist in the `photos/` folder
+- **Full URLs** (e.g., `https://...`) — used as-is; Google Drive share links are auto-converted to direct image URLs
+- **Column aliases**: `File`, `Filename`, or `URL` all work
+
+**Hosting photos externally (recommended for large collections):**
+1. Upload photos to Google Drive
+2. Right-click → Share → "Anyone with the link"
+3. Paste the share URL in the File column — `sync.py` converts it automatically
 
 3. Go to **File → Share → Publish to web** → publish the entire document
 4. Copy the Sheet ID from the URL: `https://docs.google.com/spreadsheets/d/**SHEET_ID**/edit`
