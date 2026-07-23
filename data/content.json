@@ -1,14 +1,14 @@
 {
-  "lastUpdated": "",
+  "lastUpdated": "2026-07-23T15:28:51.926905+00:00",
   "about": {
-    "bio": "Technical Architect and Team Lead with 8+ years of experience building scalable systems and leading high-performing teams. When I'm not architecting solutions, I'm out running, cycling, swimming, or hiking - always chasing the next challenge.",
+    "bio": "Technical Architect and Team Lead with 8+ years of experience building scalable systems. I lead engineering teams, design cloud-native architectures, and ship products that handle real-world scale. Outside of code, I chase finish lines — marathons, ultras, and century rides keep me sharp.",
     "currentRole": "Technical Architect & Team Lead",
     "company": "47Billion",
-    "location": "India",
+    "location": "Indore, India",
     "yearsOfExperience": "8+"
   },
   "photography": {
-    "description": "Moments captured between miles. I shoot mostly landscapes, trails, and the quiet in-between moments.",
+    "description": "Moments captured between miles.",
     "photos": []
   }
 }

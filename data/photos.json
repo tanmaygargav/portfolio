@@ -1,29 +1,16 @@
 {
-  "lastUpdated": "",
+  "lastUpdated": "2026-07-23T15:28:52.820613+00:00",
   "photos": [
     {
       "id": 1,
-      "file": "photos/sample1.jpg",
+      "file": "https://drive.google.com/uc?export=view&id=1l8aS69qZTMdULVroXmiI-3F33I3h4Ydg",
       "title": "Mountain Trail",
       "location": "Himalayas",
       "date": "2025-11-10",
-      "tags": ["landscape", "hiking"]
-    },
-    {
-      "id": 2,
-      "file": "photos/sample2.jpg",
-      "title": "Sunrise Run",
-      "location": "Pune",
-      "date": "2025-10-05",
-      "tags": ["running", "sunrise"]
-    },
-    {
-      "id": 3,
-      "file": "photos/sample3.jpg",
-      "title": "Coastal Ride",
-      "location": "Goa",
-      "date": "2025-09-20",
-      "tags": ["cycling", "coast"]
+      "tags": [
+        "landscape",
+        "hiking"
+      ]
     }
   ]
 }

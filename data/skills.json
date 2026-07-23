@@ -1,50 +1,139 @@
 {
-  "lastUpdated": "",
+  "lastUpdated": "2026-07-23T15:28:51.045248+00:00",
   "categories": [
     {
       "name": "Languages",
       "skills": [
-        { "name": "Python",     "level": "daily",      "icon": "🐍" },
-        { "name": "JavaScript", "level": "daily",      "icon": "⚡" },
-        { "name": "TypeScript", "level": "proficient", "icon": "🔷" },
-        { "name": "SQL",        "level": "daily",      "icon": "🗃️" },
-        { "name": "Java",       "level": "proficient", "icon": "☕" }
+        {
+          "name": "Python",
+          "level": "daily",
+          "icon": "🐍"
+        },
+        {
+          "name": "JavaScript",
+          "level": "daily",
+          "icon": "⚡"
+        },
+        {
+          "name": "TypeScript",
+          "level": "daily",
+          "icon": "📘"
+        },
+        {
+          "name": "SQL",
+          "level": "daily",
+          "icon": "🗃️"
+        },
+        {
+          "name": "Java",
+          "level": "proficient",
+          "icon": "☕"
+        }
       ]
     },
     {
-      "name": "Frameworks & Libraries",
+      "name": "Frameworks",
       "skills": [
-        { "name": "React",      "level": "daily",      "icon": "⚛️" },
-        { "name": "Node.js",    "level": "daily",      "icon": "🟢" },
-        { "name": "FastAPI",    "level": "proficient", "icon": "🚀" },
-        { "name": "Django",     "level": "proficient", "icon": "🎸" },
-        { "name": "Next.js",    "level": "familiar",   "icon": "▲" }
+        {
+          "name": "React",
+          "level": "daily",
+          "icon": "⚛️"
+        },
+        {
+          "name": "Node.js",
+          "level": "daily",
+          "icon": "🟢"
+        },
+        {
+          "name": "FastAPI",
+          "level": "proficient",
+          "icon": "🚀"
+        },
+        {
+          "name": "Django",
+          "level": "proficient",
+          "icon": "🎸"
+        },
+        {
+          "name": "Next.js",
+          "level": "proficient",
+          "icon": "▲"
+        }
       ]
     },
     {
       "name": "Cloud & DevOps",
       "skills": [
-        { "name": "AWS",        "level": "proficient", "icon": "☁️" },
-        { "name": "Docker",     "level": "daily",      "icon": "🐳" },
-        { "name": "Kubernetes", "level": "familiar",   "icon": "⎈" },
-        { "name": "GitHub CI",  "level": "proficient", "icon": "🔄" },
-        { "name": "Terraform",  "level": "familiar",   "icon": "🏗️" }
+        {
+          "name": "AWS",
+          "level": "daily",
+          "icon": "☁️"
+        },
+        {
+          "name": "Docker",
+          "level": "daily",
+          "icon": "🐳"
+        },
+        {
+          "name": "Kubernetes",
+          "level": "proficient",
+          "icon": "⎈"
+        },
+        {
+          "name": "GitHub CI",
+          "level": "daily",
+          "icon": "🔄"
+        },
+        {
+          "name": "Terraform",
+          "level": "familiar",
+          "icon": "🏗️"
+        }
       ]
     },
     {
       "name": "Tools & Databases",
       "skills": [
-        { "name": "PostgreSQL", "level": "daily",      "icon": "🐘" },
-        { "name": "Redis",      "level": "proficient", "icon": "🔴" },
-        { "name": "MongoDB",    "level": "proficient", "icon": "🍃" },
-        { "name": "Git",        "level": "daily",      "icon": "🌿" },
-        { "name": "Linux",      "level": "daily",      "icon": "🐧" }
+        {
+          "name": "PostgreSQL",
+          "level": "daily",
+          "icon": "🐘"
+        },
+        {
+          "name": "Redis",
+          "level": "proficient",
+          "icon": "🔴"
+        },
+        {
+          "name": "MongoDB",
+          "level": "proficient",
+          "icon": "🍃"
+        },
+        {
+          "name": "Git",
+          "level": "daily",
+          "icon": "📦"
+        },
+        {
+          "name": "Linux",
+          "level": "daily",
+          "icon": "🐧"
+        }
       ]
     }
   ],
   "levels": {
-    "daily":      { "label": "Daily Use",   "color": "#00d4ff" },
-    "proficient": { "label": "Proficient",  "color": "#00ff87" },
-    "familiar":   { "label": "Familiar",    "color": "#888888" }
+    "daily": {
+      "label": "Daily Use",
+      "color": "#00d4ff"
+    },
+    "proficient": {
+      "label": "Proficient",
+      "color": "#00ff87"
+    },
+    "familiar": {
+      "label": "Familiar",
+      "color": "#888888"
+    }
   }
 }
