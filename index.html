@@ -19,6 +19,28 @@
       --radius:    12px;
       --gap:       2rem;
       --transition: 0.25s ease;
+      --nav-bg:    rgba(10, 10, 10, 0.85);
+      --chart-grid: #1e1e1e;
+      --chart-tick: #666666;
+      --card-hover: #333;
+      --photo-overlay-bg: rgba(0,0,0,0.85);
+      --lightbox-bg: rgba(0,0,0,0.92);
+    }
+
+    /* ── LIGHT THEME ──────────────────────────────────────────── */
+    [data-theme="light"] {
+      --bg:        #ffffff;
+      --bg2:       #f5f5f5;
+      --bg3:       #e8e8e8;
+      --border:    #dddddd;
+      --text:      #1a1a1a;
+      --muted:     #555555;
+      --nav-bg:    rgba(255, 255, 255, 0.85);
+      --chart-grid: #e0e0e0;
+      --chart-tick: #555555;
+      --card-hover: #ccc;
+      --photo-overlay-bg: rgba(0,0,0,0.75);
+      --lightbox-bg: rgba(0,0,0,0.8);
     }
 
     /* ── RESET & BASE ─────────────────────────────────────────── */
@@ -32,6 +54,7 @@
       font-size: 16px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      transition: background var(--transition), color var(--transition);
     }
 
     a { color: var(--accent); text-decoration: none; }
@@ -60,18 +83,19 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: border-color var(--transition);
+      transition: border-color var(--transition), background var(--transition);
     }
-    .card:hover { border-color: #333; }
+    .card:hover { border-color: var(--card-hover); }
 
     /* ── NAV ──────────────────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(10, 10, 10, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
     }
     .nav-inner {
       max-width: 1100px;
@@ -91,6 +115,11 @@
     }
     .nav-logo .bracket { color: var(--accent); }
     .nav-logo .slash { color: var(--accent-secondary); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -104,6 +133,31 @@
     }
     .nav-links a:hover,
     .nav-links a.active { color: var(--text); text-decoration: none; }
+
+    /* ── THEME TOGGLE ─────────────────────────────────────────── */
+    .theme-toggle {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .icon-sun  { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    [data-theme="light"] .theme-toggle .icon-sun  { display: block; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
 
     /* ── HERO ─────────────────────────────────────────────────── */
     #hero {
@@ -217,6 +271,7 @@
       background: var(--bg3);
       border-radius: 8px;
       border: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
     }
     .skill-name {
       display: flex;
@@ -236,6 +291,10 @@
     .level-daily      { background: rgba(0,212,255,0.12); color: #00d4ff; }
     .level-proficient { background: rgba(0,255,135,0.12); color: #00ff87; }
     .level-familiar   { background: rgba(136,136,136,0.12); color: #888; }
+
+    [data-theme="light"] .level-daily      { background: rgba(0,180,220,0.15); color: #0090b0; }
+    [data-theme="light"] .level-proficient { background: rgba(0,200,100,0.15); color: #008050; }
+    [data-theme="light"] .level-familiar   { background: rgba(100,100,100,0.12); color: #666; }
 
     .skills-legend {
       display: flex;
@@ -276,7 +335,7 @@
       color: var(--muted);
       transition: all var(--transition);
     }
-    .tab-btn:hover { color: var(--text); border-color: #333; }
+    .tab-btn:hover { color: var(--text); border-color: var(--card-hover); }
     .tab-btn.active {
       background: var(--accent);
       color: #000;
@@ -298,6 +357,7 @@
       border-radius: var(--radius);
       padding: 1.25rem;
       text-align: center;
+      transition: background var(--transition), border-color var(--transition);
     }
     .stat-value {
       font-size: 1.8rem;
@@ -336,6 +396,7 @@
       border-radius: 10px;
       padding: 1rem;
       text-align: center;
+      transition: background var(--transition), border-color var(--transition);
     }
     .pb-distance { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
     .pb-time { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin: 0.25rem 0; }
@@ -351,9 +412,9 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 0.875rem;
-      transition: border-color var(--transition);
+      transition: border-color var(--transition), background var(--transition);
     }
-    .activity-item:hover { border-color: #333; }
+    .activity-item:hover { border-color: var(--card-hover); }
     .activity-name { font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
     .activity-meta { display: flex; gap: 1.2rem; color: var(--muted); font-size: 0.8rem; }
     .activity-date { color: var(--muted); font-size: 0.78rem; }
@@ -389,7 +450,7 @@
     .photo-overlay {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      background: linear-gradient(transparent, var(--photo-overlay-bg));
       padding: 1.5rem 1rem 1rem;
       opacity: 0;
       transition: opacity var(--transition);
@@ -419,7 +480,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.92);
+      background: var(--lightbox-bg);
       z-index: 999;
       align-items: center;
       justify-content: center;
@@ -495,7 +556,17 @@
 <nav id="navbar">
   <div class="nav-inner">
     <div class="nav-logo" id="nav-name">T<span>.</span></div>
-    <ul class="nav-links" id="nav-links"></ul>
+    <div class="nav-right">
+      <ul class="nav-links" id="nav-links"></ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -701,15 +772,87 @@
           data/content.json, data/photos.json
 ═══════════════════════════════════════════════════════════════ */
 
-const CHART_DEFAULTS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { grid: { color: "#1e1e1e" }, ticks: { color: "#666", font: { size: 11 } } },
-    y: { grid: { color: "#1e1e1e" }, ticks: { color: "#666", font: { size: 11 } }, beginAtZero: true },
-  },
-};
+// ─── THEME ──────────────────────────────────────────────────────
+function getThemeColors() {
+  const s = getComputedStyle(document.documentElement);
+  return {
+    grid: s.getPropertyValue("--chart-grid").trim(),
+    tick: s.getPropertyValue("--chart-tick").trim(),
+  };
+}
+
+function getChartDefaults() {
+  const c = getThemeColors();
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: c.grid }, ticks: { color: c.tick, font: { size: 11 } } },
+      y: { grid: { color: c.grid }, ticks: { color: c.tick, font: { size: 11 } }, beginAtZero: true },
+    },
+  };
+}
+
+function updateAllCharts() {
+  const c = getThemeColors();
+  Object.values(Chart.instances).forEach(chart => {
+    if (chart.config.type === "doughnut") {
+      // Update legend label color for donut charts
+      if (chart.options.plugins?.legend?.labels) {
+        chart.options.plugins.legend.labels.color = c.tick;
+      }
+    } else {
+      // Update scale colors for bar charts
+      if (chart.options.scales?.x) {
+        chart.options.scales.x.grid.color = c.grid;
+        chart.options.scales.x.ticks.color = c.tick;
+      }
+      if (chart.options.scales?.y) {
+        chart.options.scales.y.grid.color = c.grid;
+        chart.options.scales.y.ticks.color = c.tick;
+      }
+    }
+    chart.update("none");
+  });
+}
+
+function initTheme() {
+  const saved = localStorage.getItem("theme");
+  if (saved) {
+    document.documentElement.setAttribute("data-theme", saved);
+  } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+  // else: defaults to dark (no attribute = :root styles)
+
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "light" ? "dark" : "light";
+    if (next === "dark") {
+      document.documentElement.removeAttribute("data-theme");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+    localStorage.setItem("theme", next);
+    // Update charts after a tick so CSS vars have applied
+    requestAnimationFrame(updateAllCharts);
+  });
+
+  // Listen for system preference changes
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", e => {
+    if (!localStorage.getItem("theme")) {
+      if (e.matches) {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      requestAnimationFrame(updateAllCharts);
+    }
+  });
+}
+
+initTheme();
 
 // ─── FETCH HELPERS ──────────────────────────────────────────────
 async function loadJSON(path) {
@@ -743,7 +886,7 @@ function makeBarChart(canvasId, monthlyKm, color) {
         borderRadius: 4,
       }],
     },
-    options: { ...CHART_DEFAULTS },
+    options: { ...getChartDefaults() },
   });
 }
 
@@ -759,6 +902,7 @@ function makeDonutChart(canvasId, data) {
       </div>`;
     return;
   }
+  const c = getThemeColors();
   new Chart(canvas, {
     type: "doughnut",
     data: {
@@ -780,7 +924,7 @@ function makeDonutChart(canvasId, data) {
           display: true,
           position: "bottom",
           labels: {
-            color: "#aaa",
+            color: c.tick,
             padding: 14,
             font: { size: 12, family: "'Inter', sans-serif" },
             usePointStyle: true,
@@ -905,9 +1049,6 @@ async function applyConfig(cfg) {
           <span>${l.icon}</span> ${l.label}
         </a>`;
       }).join("");
-
-  // Footer
-  // Footer is static HTML — no JS override needed
 }
 
 // ─── LOAD CONTENT ───────────────────────────────────────────────
@@ -967,7 +1108,7 @@ async function applyStrava(strava, cfg) {
   const sum = strava.summary || {};
   const bt  = strava.byType || {};
 
-  // Hero stats — technical first, fitness second
+  // Hero stats
   document.getElementById("hero-stats").innerHTML = `
     <div>
       <div class="hero-stat-value">8+ <small style="font-size:1rem;font-weight:400;color:var(--muted)">yrs</small></div>
@@ -987,7 +1128,7 @@ async function applyStrava(strava, cfg) {
     </div>
   `;
 
-  // Fitness tabs from config
+  // Fitness tabs
   const tabs = cfg?.fitness?.tabs || [
     { id:"all", label:"All", icon:"⚡" },
     { id:"running", label:"Running", icon:"🏃" },
@@ -1016,7 +1157,7 @@ async function applyStrava(strava, cfg) {
 
   const recentCount = cfg?.fitness?.recentActivitiesCount || 5;
 
-  // ── ALL tab ─────────────────────────────────────────────────
+  // ALL tab
   renderStatsRow("all-stats-row", [
     { value: sum.totalActivities || 0, label: "Activities" },
     { value: (sum.totalDistanceKm || 0) + " km", label: "Total Distance" },
@@ -1025,7 +1166,6 @@ async function applyStrava(strava, cfg) {
   ]);
   renderActivityList("all-recent", strava.recentAll || [], recentCount);
 
-  // Activity mix donut chart (by count — avoids mixing units across sports)
   makeDonutChart("chart-activity-mix", [
     { label: "Running",  count: (bt.running?.stats?.totalRuns        || 0), color: "#00d4ff" },
     { label: "Cycling",  count: (bt.cycling?.stats?.totalRides       || 0), color: "#00ff87" },
@@ -1035,7 +1175,7 @@ async function applyStrava(strava, cfg) {
     { label: "Hiking",   count: (bt.hiking?.stats?.totalHikes        || 0), color: "#f59e0b" },
   ]);
 
-  // ── RUNNING ─────────────────────────────────────────────────
+  // RUNNING
   const run = bt.running || {};
   const rs  = run.stats || {};
   renderStatsRow("run-stats-row", [
@@ -1064,7 +1204,7 @@ async function applyStrava(strava, cfg) {
   }).join("");
   renderActivityList("run-recent", run.recentActivities || [], recentCount);
 
-  // ── CYCLING ─────────────────────────────────────────────────
+  // CYCLING
   const cyc = bt.cycling || {};
   const cs  = cyc.stats || {};
   renderStatsRow("cyc-stats-row", [
@@ -1076,10 +1216,9 @@ async function applyStrava(strava, cfg) {
   makeBarChart("chart-cyc-monthly", cyc.monthlyKm, "#00ff87");
   renderActivityList("cyc-recent", cyc.recentActivities || [], recentCount);
 
-  // ── SWIMMING ────────────────────────────────────────────────
+  // SWIMMING
   const swm = bt.swimming || {};
   const ss  = swm.stats || {};
-  // Swimming distances stored in km but displayed in meters (pool scale)
   const swmTotalM  = Math.round((ss.totalDistanceKm  || 0) * 1000);
   const swmLongestM = Math.round((ss.longestSessionsKm || 0) * 1000);
   renderStatsRow("swm-stats-row", [
@@ -1091,7 +1230,7 @@ async function applyStrava(strava, cfg) {
   makeBarChart("chart-swm-monthly", swm.monthlyKm, "#7c3aed");
   renderActivityList("swm-recent", swm.recentActivities || [], recentCount);
 
-  // ── HIKING ──────────────────────────────────────────────────
+  // HIKING
   const hik = bt.hiking || {};
   const hs  = hik.stats || {};
   renderStatsRow("hik-stats-row", [
@@ -1103,7 +1242,7 @@ async function applyStrava(strava, cfg) {
   makeBarChart("chart-hik-monthly", hik.monthlyKm, "#f59e0b");
   renderActivityList("hik-recent", hik.recentActivities || [], recentCount);
 
-  // ── WALKING ─────────────────────────────────────────────────
+  // WALKING
   const wlk = bt.walking || {};
   const ws  = wlk.stats || {};
   renderStatsRow("wlk-stats-row", [
@@ -1115,7 +1254,7 @@ async function applyStrava(strava, cfg) {
   makeBarChart("chart-wlk-monthly", wlk.monthlyKm, "#ec4899");
   renderActivityList("wlk-recent", wlk.recentActivities || [], recentCount);
 
-  // ── WORKOUT ─────────────────────────────────────────────────
+  // WORKOUT
   const wkt = bt.workout || {};
   const wts = wkt.stats || {};
   renderStatsRow("wkt-stats-row", [
@@ -1139,7 +1278,6 @@ async function applyPhotos(photosData) {
   const photos = photosData?.photos || [];
 
   if (!photos.length) {
-    // Show placeholder tiles
     grid.innerHTML = Array(6).fill(0).map(() => `
       <div class="photo-placeholder">
         <span style="font-size:2rem">📷</span>
@@ -1160,7 +1298,6 @@ async function applyPhotos(photosData) {
     </div>
   `).join("");
 
-  // Lightbox
   grid.querySelectorAll(".photo-item").forEach(item => {
     item.addEventListener("click", () => {
       document.getElementById("lightbox-img").src = item.dataset.src;

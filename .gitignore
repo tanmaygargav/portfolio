@@ -1,4 +1,6 @@
 # ── Portfolio-specific ────────────────────────────────────────────
+strava_export/*.csv
+strava_export/*.zip
 .env
 *.env
 .strava_token_cache.json
