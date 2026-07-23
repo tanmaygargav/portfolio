@@ -1,6 +1,127 @@
 {
-  "lastUpdated": "2026-07-23T15:15:47.836285+00:00",
-  "categories": [],
+  "lastUpdated": "2026-07-23T15:28:51.045248+00:00",
+  "categories": [
+    {
+      "name": "Languages",
+      "skills": [
+        {
+          "name": "Python",
+          "level": "daily",
+          "icon": "🐍"
+        },
+        {
+          "name": "JavaScript",
+          "level": "daily",
+          "icon": "⚡"
+        },
+        {
+          "name": "TypeScript",
+          "level": "daily",
+          "icon": "📘"
+        },
+        {
+          "name": "SQL",
+          "level": "daily",
+          "icon": "🗃️"
+        },
+        {
+          "name": "Java",
+          "level": "proficient",
+          "icon": "☕"
+        }
+      ]
+    },
+    {
+      "name": "Frameworks",
+      "skills": [
+        {
+          "name": "React",
+          "level": "daily",
+          "icon": "⚛️"
+        },
+        {
+          "name": "Node.js",
+          "level": "daily",
+          "icon": "🟢"
+        },
+        {
+          "name": "FastAPI",
+          "level": "proficient",
+          "icon": "🚀"
+        },
+        {
+          "name": "Django",
+          "level": "proficient",
+          "icon": "🎸"
+        },
+        {
+          "name": "Next.js",
+          "level": "proficient",
+          "icon": "▲"
+        }
+      ]
+    },
+    {
+      "name": "Cloud & DevOps",
+      "skills": [
+        {
+          "name": "AWS",
+          "level": "daily",
+          "icon": "☁️"
+        },
+        {
+          "name": "Docker",
+          "level": "daily",
+          "icon": "🐳"
+        },
+        {
+          "name": "Kubernetes",
+          "level": "proficient",
+          "icon": "⎈"
+        },
+        {
+          "name": "GitHub CI",
+          "level": "daily",
+          "icon": "🔄"
+        },
+        {
+          "name": "Terraform",
+          "level": "familiar",
+          "icon": "🏗️"
+        }
+      ]
+    },
+    {
+      "name": "Tools & Databases",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "level": "daily",
+          "icon": "🐘"
+        },
+        {
+          "name": "Redis",
+          "level": "proficient",
+          "icon": "🔴"
+        },
+        {
+          "name": "MongoDB",
+          "level": "proficient",
+          "icon": "🍃"
+        },
+        {
+          "name": "Git",
+          "level": "daily",
+          "icon": "📦"
+        },
+        {
+          "name": "Linux",
+          "level": "daily",
+          "icon": "🐧"
+        }
+      ]
+    }
+  ],
   "levels": {
     "daily": {
       "label": "Daily Use",
